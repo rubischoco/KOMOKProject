@@ -7,6 +7,6 @@
 
 ### [Product Backlog](https://docs.google.com/spreadsheets/d/1FXyzIFm2AvV1hARPRN1fpMccrpSSxL1ATb-We1RKoMg/edit?ts=5f68aa00#gid=1386834576)
 1. Membuat design user interface
-2. Membuat fronend aplikasi
+2. Membuat front-end aplikasi
 3. Membuat code logic face recognition
 4. Membuat code logic face swap
