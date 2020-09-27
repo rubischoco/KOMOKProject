@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Komok</string>
+    <string name="text_before">Before</string>
+    <string name="image_beforeDesc">Before Image</string>
+    <string name="text_after">After</string>
+    <string name="image_afterDesc">After Image</string>
+    <string name="button_save">Save</string>
+    <string name="button_share">Share</string>
+</resources>
