@@ -7,8 +7,6 @@
 
 ### [Product Backlog](https://docs.google.com/spreadsheets/d/1FXyzIFm2AvV1hARPRN1fpMccrpSSxL1ATb-We1RKoMg/edit?usp=sharing)
 
-### Sprint 2 Backlog
-1. [Membuat tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/4)
-2. [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3)
-3. [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2)
-4. [Buat Logo](https://github.com/rubischoco/KOMOKProject/issues/1)
+### Sprint 3 Backlog
+1. [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3)
+2. [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2)
