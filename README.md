@@ -9,7 +9,7 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| [Membuat tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/4) | - | Completed | Riza |
-| [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3) | - | In Progress | Ari |
-| [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2) | - | In Progress | Fathur |
-| [Buat Logo](https://github.com/rubischoco/KOMOKProject/issues/1) | - | Completed | Fathur |
+| Membuat UI | [Membuat tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/4) | Completed | Riza |
+| Membuat UI | [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3) | In Progress | Ari |
+| Membuat UI | [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2) | In Progress | Fathur |
+| Membuat UI | [Buat Logo](https://github.com/rubischoco/KOMOKProject/issues/1) | Completed | Fathur |
