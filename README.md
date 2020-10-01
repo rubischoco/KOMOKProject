@@ -8,5 +8,11 @@
 ### [Product Backlog](https://docs.google.com/spreadsheets/d/1FXyzIFm2AvV1hARPRN1fpMccrpSSxL1ATb-We1RKoMg/edit?usp=sharing)
 
 ### Sprint 3 Backlog
-1. [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3)
-2. [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2)
+### Sprint 2 Backlog
+
+| Story | Task | Status | Contributor |
+|-------|------|--------|-------------|
+| Membuat UI | [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3) | In Progress | Ari |
+| Membuat UI | [Buat icon aplikasi]() | In Progress | Fathur |
+| Membuat UI | [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2) | In Progress | Fathur |
+| Membuat UI | [Buat sistem pemilihan gambar]() | In Progress | Ari |
