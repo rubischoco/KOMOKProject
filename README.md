@@ -5,10 +5,11 @@
 2. [Fathurrahman Ikhsan](https://github.com/rubischoco) - 1313617022
 3. [M. Riza Farhandhy](https://github.com/MRizaF) - 1313617038
 
-### [Product Backlog](https://docs.google.com/spreadsheets/d/1FXyzIFm2AvV1hARPRN1fpMccrpSSxL1ATb-We1RKoMg/edit?usp=sharing)
-
 ### Sprint 2 Backlog
-1. [Membuat tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/4)
-2. [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3)
-3. [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2)
-4. [Buat Logo](https://github.com/rubischoco/KOMOKProject/issues/1)
+
+| Story | Task | Status | Contributor |
+|-------|------|--------|-------------|
+| [Membuat tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/4) | - | Completed | Riza |
+| [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3) | - | In Progress | Ari |
+| [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2) | - | In Progress | Fathur |
+| [Buat Logo](https://github.com/rubischoco/KOMOKProject/issues/1) | - | Completed | Fathur |
