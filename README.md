@@ -15,5 +15,6 @@
 | Membuat UI | [Buat icon aplikasi](https://github.com/rubischoco/KOMOKProject/issues/9) | In Progress | Fathur |
 | Membuat UI | [Buat about page](https://github.com/rubischoco/KOMOKProject/issues/5) | In Progress | Ari |
 | Membuat UI | [Buat splashscreen](https://github.com/rubischoco/KOMOKProject/issues/6) | In Progress | Riza |
+| Membuat UI | [Menerapkan sistem pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/8) | In Progress | Riza |
 
 
