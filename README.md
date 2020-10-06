@@ -7,12 +7,13 @@
 
 ### [Product Backlog](https://docs.google.com/spreadsheets/d/1FXyzIFm2AvV1hARPRN1fpMccrpSSxL1ATb-We1RKoMg/edit?usp=sharing)
 
-### Sprint 3 Backlog
+### Sprint 4 Backlog
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3) | In Progress | Ari |
-| Membuat UI | [Buat icon aplikasi]() | In Progress | Fathur |
-| Membuat UI | [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2) | In Progress | Fathur |
-| Membuat UI | [Buat sistem pemilihan gambar]() | In Progress | Ari |
+| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
+| Membuat UI | [Buat icon aplikasi](https://github.com/rubischoco/KOMOKProject/issues/9) | In Progress | Fathur |
+| Membuat UI | [Buat about page](https://github.com/rubischoco/KOMOKProject/issues/5) | In Progress | Ari |
+| Membuat UI | [Buat splashscreen](https://github.com/rubischoco/KOMOKProject/issues/6) | In Progress | Riza |
+
 
