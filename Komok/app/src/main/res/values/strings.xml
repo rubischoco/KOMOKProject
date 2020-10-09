@@ -1,5 +1,13 @@
 <resources>
     <string name="app_name">Komok</string>
+
+    <string name="image_logo">Komok logo</string>
+    <string name="button_upload">Upload</string>
+
+    <string name="text_detect">Face Detector</string>
+    <string name="image_detect">Detecting face in image</string>
+    <string name="button_swap">Swap</string>
+
     <string name="text_before">Before</string>
     <string name="image_beforeDesc">Before Image</string>
     <string name="text_after">After</string>

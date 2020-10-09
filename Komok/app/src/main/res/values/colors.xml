@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="colorUpload">#CF1010</color>
-    <color name="ic_launcher_background">#DCDADB</color>
+    <color name="colorPrimary">#CF1010</color>
+    <color name="colorPrimaryDark">#AF0F0F</color>
+    <color name="colorAccent">#F44336</color>
+
+    <color name="color_button">#CF1010</color>
+
+    <color name="icon_background">#FFFFFF</color>
 </resources>
