@@ -12,7 +12,7 @@
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
 | Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
-| Face-recognition | [Face Detection](https://github.com/rubischoco/KOMOKProject/issues/11) | In Progress | Riza |
+| Face-recognition | [Face Detection](https://github.com/rubischoco/KOMOKProject/issues/11) | Completed | Riza |
 | Face-recognition | [Crop face](https://github.com/rubischoco/KOMOKProject/issues/12) | In Progress | ... |
 | Membuat UI | [buat login register](https://github.com/rubischoco/KOMOKProject/issues/10) | In Progress | Ari |
 
