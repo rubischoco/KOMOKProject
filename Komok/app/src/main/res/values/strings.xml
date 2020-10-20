@@ -2,17 +2,21 @@
     <string name="app_name">Komok</string>
 
     <string name="image_logo">Komok logo</string>
-    <string name="button_upload">Upload</string>
+    <string name="button_swapface">Swap Face</string>
+    <string name="button_cropface">Crop Face</string>
     <string name="button_about">About</string>
 
-    <string name="text_detect">Face Detector</string>
-    <string name="image_detect">Detecting face in image</string>
-    <string name="button_swap">Detect</string>
+    <string name="image_preview">Image</string>
+    <string name="text_info">Face Detector</string>
+    <string name="button_duplicate">Duplicate</string>
+    <string name="button_swap">Swap</string>
+    <string name="button_setting">Setting</string>
 
-    <string name="text_before">Before</string>
-    <string name="image_beforeDesc">Before Image</string>
-    <string name="text_after">After</string>
-    <string name="image_afterDesc">After Image</string>
-    <string name="button_save">Save</string>
-    <string name="button_share">Share</string>
+    <string name="about">
+        Version 1.0
+        \n
+        \nDeveloped by Team C
+        \nMobile Computing UNJ
+    </string>
+    <string name="footer">Copyright © 2020</string>
 </resources>

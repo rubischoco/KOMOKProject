@@ -23,9 +23,19 @@
             </intent-filter>
         </activity>
         <activity android:name=".HomeActivity" />
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".AboutActivity" />
         <activity android:name=".SwapActivity" />
+        <activity android:name=".CropActivity" />
+        <activity android:name=".AboutActivity" />
+        <activity android:name=".LoginActivity" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.teamC.komok.fileprovider"
+            android:grantUriPermissions="true"
+            android:exported="false">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
     </application>
 
 </manifest>

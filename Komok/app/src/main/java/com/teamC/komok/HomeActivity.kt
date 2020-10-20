@@ -4,14 +4,18 @@ import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_home.*
 
 class HomeActivity : AppCompatActivity() {
 
+    private val permissionUtils = PermissionUtils()
+    private val imageUtils = ImageUtils()
+
     companion object {
-        private const val IMAGE_PICK_CODE = 1000
-        private const val PERMISSION_CODE = 1001
+        const val PERMISSION_CODE = 100
+        const val IMAGE_PICK_CODE1 = 101
+        const val IMAGE_PICK_CODE2 = 102
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -20,41 +24,48 @@ class HomeActivity : AppCompatActivity() {
 
         //val btnUpload: Button = findViewById(R.id.button_upload)
 
-        findViewById<Button>(R.id.button_upload).setOnClickListener {
-            if (PermissionUtils.requestPermission(this, PERMISSION_CODE,
+        button_swap.setOnClickListener {
+            if (permissionUtils.requestPermission(this, PERMISSION_CODE,
                     Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                pickImageFromGallery()
+                imageUtils.pickImageFromGallery(this, IMAGE_PICK_CODE1)
             }
         }
 
-        findViewById<Button>(R.id.button_about).setOnClickListener {
+        button_crop.setOnClickListener {
+            if (permissionUtils.requestPermission(this, PERMISSION_CODE,
+                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                imageUtils.pickImageFromGallery(this, IMAGE_PICK_CODE2)
+            }
+        }
+
+        button_about.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
         }
     }
 
-    private fun pickImageFromGallery() {
-        //Intent to pick image
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, IMAGE_PICK_CODE)
-    }
-
     //handle requested permission result
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (PermissionUtils.permissionGranted(requestCode, PERMISSION_CODE, grantResults)) {
-            pickImageFromGallery()
+        if (permissionUtils.permissionGranted(requestCode, PERMISSION_CODE, grantResults)) {
+            imageUtils.pickImageFromGallery(this, IMAGE_PICK_CODE1)
         }
     }
 
     //handle result of picked image
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK && requestCode == IMAGE_PICK_CODE) {
-            val intent = Intent(this, SwapActivity::class.java)
-            intent.putExtra("imageUpload", data?.data.toString())
-            startActivity(intent)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == IMAGE_PICK_CODE1) {
+                val intent = Intent(this, SwapActivity::class.java)
+                intent.putExtra("imageUpload", data?.data.toString())
+                startActivity(intent)
+            }
+            else if (requestCode == IMAGE_PICK_CODE2) {
+                val intent = Intent(this, CropActivity::class.java)
+                intent.putExtra("imageUpload", data?.data.toString())
+                startActivity(intent)
+            }
         }
     }
 }
