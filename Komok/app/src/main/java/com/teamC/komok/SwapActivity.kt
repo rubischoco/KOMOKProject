@@ -55,10 +55,10 @@ class SwapActivity : AppCompatActivity() {
 
         button_duplicate.setOnClickListener {
             if (savedFaces.isNotEmpty()) {
-                if (rand+1 >= savedFaces.size-1) rand=0 else rand+=1
+                if (rand >= savedFaces.size-1) rand=0 else rand+=1
                 savedBitmap = drawUtils.swapFaces(drawUtils.getBitmapFromUri(this, imageUpload), savedFaces, rand, true)
                 image_preview.setImageBitmap(savedBitmap)
-                enabledButton(true)
+                enabledButton(2, true)
             } else {
                 Toast.makeText(this, "No face data", Toast.LENGTH_SHORT).show()
             }
@@ -69,7 +69,7 @@ class SwapActivity : AppCompatActivity() {
                 if (rand+1 >= savedFaces.size-1) rand=0 else rand+=1
                 savedBitmap = drawUtils.swapFaces(drawUtils.getBitmapFromUri(this, imageUpload), savedFaces, rand)
                 image_preview.setImageBitmap(savedBitmap)
-                enabledButton(true)
+                enabledButton(2, true)
             } else {
                 Toast.makeText(this, "No face data", Toast.LENGTH_SHORT).show()
             }
@@ -109,7 +109,8 @@ class SwapActivity : AppCompatActivity() {
         val image = InputImage.fromFilePath(this, uri)
         val bitmap = drawUtils.getBitmapFromUri(this, uri)
 
-        enabledButton(false)
+        enabledButton(1, false)
+        enabledButton(2, false)
         savedFaces = mutableListOf()
         text_info.text = "[DETECTING FACE]"
 
@@ -125,6 +126,7 @@ class SwapActivity : AppCompatActivity() {
                                 text_info.text = "[${savedFaces.size} FACE SCANNED]"
 
                                 image_preview.setImageBitmap(drawUtils.drawContourFaces(bitmap, savedFaces))
+                                if (button_swap.alpha < 1 && savedFaces.size > 1) {enabledButton(1, true)}
                             } else { text_info.text = "[FACE NOT PASS]" }
                         } else { text_info.text = "[FACE NOT PASS]" }
                     }
@@ -157,13 +159,23 @@ class SwapActivity : AppCompatActivity() {
         }
     }
 
-    private fun enabledButton(bool: Boolean) {
-        if (bool) {
-            button_save.alpha = 1f
-            button_share.alpha = 1f
-        } else {
-            button_save.alpha = 0.6f
-            button_share.alpha = 0.6f
+    private fun enabledButton(buttonGroup: Int, bool: Boolean) {
+        if (buttonGroup == 1) {
+            if (bool) {
+                button_duplicate.alpha = 1f
+                button_swap.alpha = 1f
+            } else {
+                button_duplicate.alpha = 0.6f
+                button_swap.alpha = 0.6f
+            }
+        } else if (buttonGroup == 2) {
+            if (bool) {
+                button_save.alpha = 1f
+                button_share.alpha = 1f
+            } else {
+                button_save.alpha = 0.6f
+                button_share.alpha = 0.6f
+            }
         }
     }
 }
