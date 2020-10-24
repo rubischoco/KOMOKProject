@@ -13,7 +13,8 @@
 |-------|------|--------|-------------|
 | Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
 | Face-recognition | [Face Detection](https://github.com/rubischoco/KOMOKProject/issues/11) | Completed | Riza |
-| Face-recognition | [Crop face](https://github.com/rubischoco/KOMOKProject/issues/12) | In Progress | ... |
+| Face-recognition | [Crop face](https://github.com/rubischoco/KOMOKProject/issues/12) | Completed | Riza |
+| Face-recognition | [Swap face](https://github.com/rubischoco/KOMOKProject/issues/13) | Completed | Riza |
 | Membuat UI | [buat login register](https://github.com/rubischoco/KOMOKProject/issues/10) | In Progress | Ari |
 
-
+### Komok (beta version) : [download](https://github.com/rubischoco/KOMOKProject/raw/sprint6/Komok-beta.apk)
