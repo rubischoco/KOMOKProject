@@ -11,11 +11,45 @@
         style="@style/text_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/button_swapface"
+        android:text="@string/title_swapface"
         android:textAlignment="center"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="38dp"
+        android:layout_height="0dp"
+        android:background="@null"
+
+        android:drawableEnd="@drawable/button_back"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_watermark"
+        android:layout_width="38dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:drawableStart="@drawable/button_watermark_on"
+
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintEnd_toStartOf="@+id/button_help"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_help"
+        android:layout_width="38dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:drawableStart="@drawable/button_help"
+
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -101,6 +135,5 @@
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

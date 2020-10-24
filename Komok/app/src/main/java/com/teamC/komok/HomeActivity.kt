@@ -22,8 +22,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        //val btnUpload: Button = findViewById(R.id.button_upload)
-
         button_swap.setOnClickListener {
             if (permissionUtils.requestPermission(this, PERMISSION_CODE,
                     Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {

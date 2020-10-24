@@ -1,17 +1,21 @@
 package com.teamC.komok
 
 import android.app.Activity
+import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.Matrix
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
 import androidx.core.content.FileProvider
+import androidx.exifinterface.media.ExifInterface
 import java.io.File
 import java.io.FileOutputStream
+import java.io.IOException
 import java.io.OutputStream
 
 class ImageUtils {
@@ -19,6 +23,63 @@ class ImageUtils {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
         activity.startActivityForResult(intent, pickCode)
+    }
+
+    // mendapatkan bitmap dari uri (ML Kit Samples)
+    fun getBitmapFromContentUri(contentResolver: ContentResolver, imageUri: Uri): Bitmap {
+        val decodedBitmap = MediaStore.Images.Media.getBitmap(contentResolver, imageUri)
+        val orientation = getExifOrientationTag(contentResolver, imageUri)
+        var rotationDegrees = 0
+        var flipX = false
+        var flipY = false
+        when (orientation) {
+            ExifInterface.ORIENTATION_FLIP_HORIZONTAL -> flipX = true
+            ExifInterface.ORIENTATION_ROTATE_90 -> rotationDegrees = 90
+            ExifInterface.ORIENTATION_TRANSPOSE -> {
+                rotationDegrees = 90
+                flipX = true
+            }
+            ExifInterface.ORIENTATION_ROTATE_180 -> rotationDegrees = 180
+            ExifInterface.ORIENTATION_FLIP_VERTICAL -> flipY = true
+            ExifInterface.ORIENTATION_ROTATE_270 -> rotationDegrees = -90
+            ExifInterface.ORIENTATION_TRANSVERSE -> {
+                rotationDegrees = -90
+                flipX = true
+            }
+            ExifInterface.ORIENTATION_UNDEFINED, ExifInterface.ORIENTATION_NORMAL -> {
+            }
+        }
+        return rotateBitmap(decodedBitmap, rotationDegrees, flipX, flipY)
+    }
+    private fun rotateBitmap(bitmap: Bitmap, rotationDegrees: Int, flipX: Boolean, flipY: Boolean): Bitmap {
+        val matrix = Matrix()
+        // Rotate the image back to straight.
+        matrix.postRotate(rotationDegrees.toFloat())
+        // Mirror the image along the X or Y axis.
+        matrix.postScale(if (flipX) -1.0f else 1.0f, if (flipY) -1.0f else 1.0f)
+        val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        // Recycle the old bitmap if it has changed.
+        if (rotatedBitmap != bitmap) { bitmap.recycle() }
+        return rotatedBitmap
+    }
+    private fun getExifOrientationTag(resolver: ContentResolver, imageUri: Uri): Int {
+        if (ContentResolver.SCHEME_CONTENT != imageUri.scheme
+            && ContentResolver.SCHEME_FILE != imageUri.scheme
+        ) {
+            return 0
+        }
+        var exif: ExifInterface
+        try {
+            resolver.openInputStream(imageUri).use { inputStream ->
+                if (inputStream == null) {
+                    return 0
+                }
+                exif = ExifInterface(inputStream)
+            }
+        } catch (e: IOException) {
+            return 0
+        }
+        return exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
     }
 
     // https://stackoverflow.com/questions/36624756/how-to-save-bitmap-to-android-gallery
@@ -102,7 +163,7 @@ class ImageUtils {
             shareIntent.action = Intent.ACTION_SEND
             shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION) // temp permission for receiving app to read this file
             shareIntent.type = "image/png" // just assign type. we don't need to set data, otherwise intent will not work properly
-            shareIntent.putExtra(Intent.EXTRA_TEXT, text);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, text)
             shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
             context.startActivity(Intent.createChooser(shareIntent, "Choose app"))
         }

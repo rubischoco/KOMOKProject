@@ -2,12 +2,15 @@ package com.teamC.komok
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.toBitmap
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
@@ -16,12 +19,15 @@ import com.google.mlkit.vision.face.FaceDetectorOptions
 import kotlinx.android.synthetic.main.activity_swap.*
 
 class SwapActivity : AppCompatActivity() {
-    private var rand = 0
     private val imageUtils = ImageUtils()
     private val drawUtils = DrawUtils()
     private val detector: FaceDetector
+    private var randPos = 0
+    private var watermark = true
     private lateinit var imageUpload: Uri
+    private lateinit var bitmap: Bitmap
     private lateinit var savedBitmap: Bitmap
+    private lateinit var watermarkBitmap: Bitmap
     private lateinit var savedFaces: MutableList<Face>
 
     companion object {
@@ -44,41 +50,63 @@ class SwapActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_swap)
 
+        val watermarkOn = ContextCompat.getDrawable(this, R.drawable.button_watermark_on)
+        val watermarkOff = ContextCompat.getDrawable(this, R.drawable.button_watermark_off)
+        watermarkBitmap = ContextCompat.getDrawable(this, R.drawable.komok_splash)?.toBitmap()!!
+
         imageUpload = Uri.parse(intent.getStringExtra("imageUpload"))
 
         image_preview.setImageURI(imageUpload)
         detectFaces(imageUpload)
+
+        button_back.setOnClickListener { finish() }
+
+        button_watermark.setOnClickListener {
+            if (button_watermark.alpha == 1f) {
+                watermark = !watermark
+                image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                button_watermark.setCompoundDrawablesWithIntrinsicBounds(
+                    if (watermark) watermarkOn else watermarkOff,
+                    null,
+                    null,
+                    null
+                )
+            }
+        }
+
+        button_help.setOnClickListener {
+            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
+        }
 
         button_change.setOnClickListener {
             imageUtils.pickImageFromGallery(this, IMAGE_PICK_CODE)
         }
 
         button_duplicate.setOnClickListener {
-            if (savedFaces.isNotEmpty()) {
-                if (rand >= savedFaces.size-1) rand=0 else rand+=1
-                savedBitmap = drawUtils.swapFaces(drawUtils.getBitmapFromUri(this, imageUpload), savedFaces, rand, true)
-                image_preview.setImageBitmap(savedBitmap)
-                enabledButton(2, true)
+            if (button_duplicate.alpha == 1f) {
+                if (randPos >= savedFaces.size-1) {randPos=0} else {randPos+=1}
+                savedBitmap = drawUtils.swapFaces(bitmap, savedFaces, randPos, true)
+                image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                toggleButton(true, 2)
             } else {
-                Toast.makeText(this, "No face data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Not enough face data", Toast.LENGTH_SHORT).show()
             }
         }
 
         button_swap.setOnClickListener {
-            if (savedFaces.isNotEmpty()) {
-                if (rand+1 >= savedFaces.size-1) rand=0 else rand+=1
-                savedBitmap = drawUtils.swapFaces(drawUtils.getBitmapFromUri(this, imageUpload), savedFaces, rand)
-                image_preview.setImageBitmap(savedBitmap)
-                enabledButton(2, true)
+            if (button_swap.alpha == 1f) {
+                if (randPos+1 >= savedFaces.size-1) {randPos=0} else {randPos+=1}
+                savedBitmap = drawUtils.swapFaces(bitmap, savedFaces, randPos)
+                image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                toggleButton(true, 2)
             } else {
-                Toast.makeText(this, "No face data", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Not enough face data", Toast.LENGTH_SHORT).show()
             }
         }
 
         button_save.setOnClickListener {
             if (button_save.alpha == 1f) {
-                imageUtils.saveImage(this, savedBitmap)
-                Toast.makeText(this, "Success saved swapped face!", Toast.LENGTH_SHORT).show()
+                showSaveDialog()
             } else {
                 Toast.makeText(this, "Swap face first!", Toast.LENGTH_SHORT).show()
             }
@@ -86,7 +114,7 @@ class SwapActivity : AppCompatActivity() {
 
         button_share.setOnClickListener {
             if (button_share.alpha == 1f) {
-                imageUtils.shareImage(this, savedBitmap)
+                imageUtils.shareImage(this, bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
             } else {
                 Toast.makeText(this, "Swap face first!", Toast.LENGTH_SHORT).show()
             }
@@ -106,11 +134,9 @@ class SwapActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun detectFaces(uri: Uri) {
+        toggleButton(false)
         val image = InputImage.fromFilePath(this, uri)
-        val bitmap = drawUtils.getBitmapFromUri(this, uri)
-
-        enabledButton(1, false)
-        enabledButton(2, false)
+        bitmap = imageUtils.getBitmapFromContentUri(contentResolver, uri)
         savedFaces = mutableListOf()
         text_info.text = "[DETECTING FACE]"
 
@@ -122,11 +148,13 @@ class SwapActivity : AppCompatActivity() {
                     detectFacesContour(bitmap, faces) { newFaces ->
                         if (newFaces.isNotEmpty()) {
                             savedFaces = drawUtils.checkFacePoint(bitmap, newFaces)
+
                             if (savedFaces.isNotEmpty()) {
                                 text_info.text = "[${savedFaces.size} FACE SCANNED]"
+                                savedBitmap = drawUtils.drawContourFaces(bitmap, savedFaces)
+                                image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
 
-                                image_preview.setImageBitmap(drawUtils.drawContourFaces(bitmap, savedFaces))
-                                if (button_swap.alpha < 1 && savedFaces.size > 1) {enabledButton(1, true)}
+                                if (button_swap.alpha < 1 && savedFaces.size > 1) {toggleButton(true, 1)}
                             } else { text_info.text = "[FACE NOT PASS]" }
                         } else { text_info.text = "[FACE NOT PASS]" }
                     }
@@ -135,14 +163,13 @@ class SwapActivity : AppCompatActivity() {
             .addOnFailureListener { e -> text_info.text = "[ $e ]" }
     }
 
-    private fun detectFacesContour(bitmap: Bitmap, faces: MutableList<Face>, callback: (MutableList<Face>) -> Unit) {
+    private fun detectFacesContour(curBitmap: Bitmap, faces: MutableList<Face>, callback: (MutableList<Face>) -> Unit) {
         val newFaces = mutableListOf<Face>()
 
         for (face in faces) {
-            val tempBitmap = drawUtils.fillFaces(bitmap, faces, face)
-            //imageUtils.saveImage(this, tempBitmap)
+            val tempBitmap = drawUtils.fillFaces(curBitmap, faces, face)
             val images = InputImage.fromBitmap(tempBitmap, 0)
-
+            //imageUtils.saveImage(this, tempBitmap)
             detector.process(images)
                 .addOnSuccessListener { nFaces ->
                     if (nFaces.isNotEmpty()) {
@@ -159,23 +186,38 @@ class SwapActivity : AppCompatActivity() {
         }
     }
 
-    private fun enabledButton(buttonGroup: Int, bool: Boolean) {
-        if (buttonGroup == 1) {
-            if (bool) {
-                button_duplicate.alpha = 1f
-                button_swap.alpha = 1f
-            } else {
-                button_duplicate.alpha = 0.6f
-                button_swap.alpha = 0.6f
-            }
-        } else if (buttonGroup == 2) {
-            if (bool) {
-                button_save.alpha = 1f
-                button_share.alpha = 1f
-            } else {
-                button_save.alpha = 0.6f
-                button_share.alpha = 0.6f
-            }
+    private fun bitmapWithWatermark(watermark: Boolean, bitmap: Bitmap, watermarkBitmap: Bitmap): Bitmap {
+        return if (watermark) { drawUtils.drawWatermark(bitmap, watermarkBitmap) }
+        else { bitmap }
+    }
+
+    private fun showSaveDialog() {
+        // setup the alert builder
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Save Image")
+        builder.setMessage("Are you sure you want to save the swap image result?")
+        // add the buttons
+        builder.setPositiveButton("Yes") { _, _ ->
+            imageUtils.saveImage(this, bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+            Toast.makeText(this, "Success saved swapped face!", Toast.LENGTH_SHORT).show()
+        }
+        builder.setNegativeButton("No", null)
+        // create and show the alert dialog
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    private fun toggleButton(bool: Boolean, buttonGroup: Int=0) {
+        val n: Float = if (bool) 1f else 0.6f
+
+        if (buttonGroup == 0 || buttonGroup == 1)  {
+            button_watermark.alpha = n
+            button_duplicate.alpha = n
+            button_swap.alpha = n
+        }
+        if (buttonGroup == 0 || buttonGroup == 2) {
+            button_save.alpha = n
+            button_share.alpha = n
         }
     }
 }

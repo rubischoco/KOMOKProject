@@ -6,11 +6,15 @@
     <string name="button_cropface">Crop Face</string>
     <string name="button_about">About</string>
 
+    <string name="title_swapface">Komok\nSwap Face</string>
+    <string name="title_cropface">Komok\nCrop Face</string>
+    <string name="title_about">Komok\nAbout</string>
+
     <string name="image_preview">Image</string>
     <string name="text_info">Face Detector</string>
     <string name="button_duplicate">Duplicate</string>
     <string name="button_swap">Swap</string>
-    <string name="button_setting">Setting</string>
+    <string name="button_shape"> </string>
 
     <string name="about">
         Version 1.0

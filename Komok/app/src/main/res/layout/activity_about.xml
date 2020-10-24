@@ -10,10 +10,21 @@
         style="@style/text_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/button_about"
+        android:text="@string/title_about"
         android:textAlignment="center"
 
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="38dp"
+        android:layout_height="0dp"
+        android:background="@null"
+
+        android:drawableEnd="@drawable/button_back"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
