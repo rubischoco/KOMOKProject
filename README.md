@@ -1,11 +1,11 @@
 # Mobcom 113 - KOMOK Project
 
-### Member
+## Member
 1. [Ari Purnama Aji](https://github.com/AriPurnamaAji) - 1313617008
 2. [Fathurrahman Ikhsan](https://github.com/rubischoco) - 1313617022
 3. [M. Riza Farhandhy](https://github.com/MRizaF) - 1313617038
 
-### Sprint 2 Backlog
+## Sprint 2 Backlog
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
