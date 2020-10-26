@@ -1,5 +1,7 @@
 # Mobcom 113 - KOMOK Project
 
+### Komok (beta version) : [download](https://github.com/rubischoco/KOMOKProject/raw/sprint6/Komok-beta.apk)
+
 ## Member
 1. [Ari Purnama Aji](https://github.com/AriPurnamaAji) - 1313617008
 2. [Fathurrahman Ikhsan](https://github.com/rubischoco) - 1313617022
@@ -17,5 +19,3 @@
 | Fungsi gambar | [Sistem save gambar](https://github.com/rubischoco/KOMOKProject/issues/16) | Completed | Ari |
 | Fungsi gambar | [Sistem share gambar](https://github.com/rubischoco/KOMOKProject/issues/17) | Completed | Ari |
 | Membuat UI | [Buat login register](https://github.com/rubischoco/KOMOKProject/issues/10) | In Progress | Ari |
-
-### Komok (beta version) : [download](https://github.com/rubischoco/KOMOKProject/raw/sprint6/Komok-beta.apk)
