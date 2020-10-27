@@ -1,6 +1,7 @@
 package com.teamC.komok
 
 import android.app.Activity
+import android.app.Dialog
 import android.content.ContentResolver
 import android.content.ContentValues
 import android.content.Context
@@ -11,6 +12,8 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.util.Log
+import android.view.Window
+import android.widget.LinearLayout
 import androidx.core.content.FileProvider
 import androidx.exifinterface.media.ExifInterface
 import java.io.File
@@ -18,11 +21,54 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 
+
 class ImageUtils {
-    fun pickImageFromGallery(activity: Activity, pickCode: Int) {
+    var cameraUri: Uri? = Uri.EMPTY
+
+    fun getImageDialog(activity: Activity, cameraCode: Int, galleryCode: Int) {
+        val customDialog = Dialog(activity).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_choose)
+            setCancelable(true)
+        }
+        customDialog.show()
+
+        val buttonCamera = customDialog.findViewById<LinearLayout>(R.id.button_camera)
+        val buttonGallery = customDialog.findViewById<LinearLayout>(R.id.button_gallery)
+
+        buttonCamera.setOnClickListener {
+            customDialog.dismiss()
+            getImageFromCamera(activity, cameraCode)
+        }
+
+        buttonGallery.setOnClickListener {
+            customDialog.dismiss()
+            getImageFromGallery(activity, galleryCode)
+        }
+    }
+
+    private fun getImageFromCamera(activity: Activity, getCode: Int, folderName: String="KOMOK") {
+        var values = ContentValues()
+        if (android.os.Build.VERSION.SDK_INT >= 29) {
+            values = pathNewer(folderName)
+        } else {
+            values.put(MediaStore.Images.Media.DATA, pathOlder(folderName).absolutePath)
+        }
+        cameraUri = activity.contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+        //Camera intent
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraUri)
+        activity.startActivityForResult(cameraIntent, getCode)
+    }
+
+    fun cancelCamera(activity: Activity) {
+        cameraUri?.let { activity.contentResolver.delete(it, null, null) }
+    }
+
+    private fun getImageFromGallery(activity: Activity, getCode: Int) {
         val intent = Intent(Intent.ACTION_PICK)
         intent.type = "image/*"
-        activity.startActivityForResult(intent, pickCode)
+        activity.startActivityForResult(intent, getCode)
     }
 
     // mendapatkan bitmap dari uri (ML Kit Samples)
@@ -57,7 +103,15 @@ class ImageUtils {
         matrix.postRotate(rotationDegrees.toFloat())
         // Mirror the image along the X or Y axis.
         matrix.postScale(if (flipX) -1.0f else 1.0f, if (flipY) -1.0f else 1.0f)
-        val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+        val rotatedBitmap = Bitmap.createBitmap(
+            bitmap,
+            0,
+            0,
+            bitmap.width,
+            bitmap.height,
+            matrix,
+            true
+        )
         // Recycle the old bitmap if it has changed.
         if (rotatedBitmap != bitmap) { bitmap.recycle() }
         return rotatedBitmap
@@ -85,11 +139,8 @@ class ImageUtils {
     // https://stackoverflow.com/questions/36624756/how-to-save-bitmap-to-android-gallery
     fun saveImage(context: Context, bitmap: Bitmap, folderName: String="KOMOK") {
         if (android.os.Build.VERSION.SDK_INT >= 29) {
-            val values = contentValues()
-            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$folderName")
+            val values = pathNewer(folderName)
             values.put(MediaStore.Images.Media.IS_PENDING, true)
-            // RELATIVE_PATH and IS_PENDING are introduced in API 29.
-
             val uri: Uri? = context.contentResolver.insert(
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                 values
@@ -100,16 +151,7 @@ class ImageUtils {
                 context.contentResolver.update(uri, values, null, null)
             }
         } else {
-            val directory = File(
-                Environment.getExternalStorageDirectory().toString() + File.separator + folderName
-            )
-            // getExternalStorageDirectory is deprecated in API 29
-
-            if (!directory.exists()) {
-                directory.mkdirs()
-            }
-            val fileName = System.currentTimeMillis().toString() + ".png"
-            val file = File(directory, fileName)
+            val file = pathOlder(folderName)
             saveImageToStream(bitmap, FileOutputStream(file))
             if (file.absolutePath != null) {
                 val values = contentValues()
@@ -120,11 +162,24 @@ class ImageUtils {
         }
     }
     private fun contentValues() : ContentValues {
-        val values = ContentValues()
-        values.put(MediaStore.Images.Media.MIME_TYPE, "image/png")
-        values.put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
-        values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
-        return values
+        return ContentValues().apply {
+            put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+            put(MediaStore.Images.Media.DATE_ADDED, System.currentTimeMillis() / 1000)
+            put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+        }
+    }
+    private fun pathNewer(folderName: String): ContentValues {
+        // RELATIVE_PATH and IS_PENDING are introduced in API 29.
+        return contentValues().apply {
+            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/$folderName")
+        }
+    }
+    private fun pathOlder(folderName: String): File {
+        // getExternalStorageDirectory is deprecated in API 29
+        val directory = File(Environment.getExternalStorageDirectory().toString() + File.separator + folderName)
+        if (!directory.exists()) { directory.mkdirs() }
+        val fileName = System.currentTimeMillis().toString() + ".png"
+        return File(directory, fileName)
     }
     private fun saveImageToStream(bitmap: Bitmap, outputStream: OutputStream?) {
         if (outputStream != null) {
@@ -140,8 +195,7 @@ class ImageUtils {
     // https://stackoverflow.com/questions/9049143/android-share-intent-for-a-bitmap-is-it-possible-not-to-save-it-prior-sharing?rq=1
     fun shareImage(context: Context, bitmap: Bitmap, text: String="#KOMOK") {
         // We need date and time to be added to image name to make it unique every time, otherwise bitmap will not update
-        val imageName = "/image_${System.currentTimeMillis()}.jpg"
-
+        val imageName = "/image_${System.currentTimeMillis()}.png"
         // SAVE
         try {
             File(context.cacheDir, "images").deleteRecursively() // delete old images
@@ -153,11 +207,14 @@ class ImageUtils {
         } catch (ex: Exception) {
             Log.e("SHARE ERROR", ex.toString())
         }
-
         // SHARE
         val imagePath = File(context.cacheDir, "images")
         val newFile = File(imagePath, imageName)
-        val contentUri = FileProvider.getUriForFile(context, "com.teamC.komok.fileprovider", newFile)
+        val contentUri = FileProvider.getUriForFile(
+            context,
+            "com.teamC.komok.fileprovider",
+            newFile
+        )
         if (contentUri != null) {
             val shareIntent = Intent()
             shareIntent.action = Intent.ACTION_SEND

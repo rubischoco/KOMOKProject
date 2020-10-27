@@ -82,7 +82,7 @@
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_border"
-        android:drawableStart="@drawable/button_change"
+        android:drawableStart="@drawable/button_gallery"
         android:paddingStart="16dp"
         android:paddingEnd="0dp"
 

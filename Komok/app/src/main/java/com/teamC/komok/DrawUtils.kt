@@ -28,10 +28,15 @@ class DrawUtils {
     }
 
     // mendapatkan potongan gambar wajah pada gambar
-    fun cropShapeFaces(bitmap: Bitmap, curFace: Face, shape: Boolean=true, size: Int=0): Bitmap {
+    fun cropShapeFaces(
+        bitmap: Bitmap,
+        curFace: Face,
+        shape: Boolean = true,
+        size: Int = 0
+    ): Bitmap {
         // mendapatkan titik kotak untuk wajah dan merubah ukuran
-        val faceRect = resizeRect(curFace.boundingBox, size)
-        //val faceRect = getRectBound(bitmap, resizeRect(curFace.boundingBox, size))
+//        val faceRect = resizeRect(curFace.boundingBox, size)
+        val faceRect = getRectBound(bitmap, resizeRect(curFace.boundingBox, size))
         // buat bitmap kosong dengan ukuran kotak wajah yang akan diambil
         val tempBitmap = Bitmap.createBitmap(
             faceRect.width(),
@@ -40,7 +45,7 @@ class DrawUtils {
         )
         val tempCanvas = Canvas(tempBitmap)
         if (!shape) {
-            tempCanvas.drawOval(0f, 0f, faceRect.width()+0f, faceRect.height()+0f, fillBox)
+            tempCanvas.drawOval(0f, 0f, faceRect.width() + 0f, faceRect.height() + 0f, fillBox)
             //tempCanvas.drawCircle(faceRect.width()/2f, faceRect.height()/2f, faceRect.width()/2f, fillBox)
             fillBox.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         }
@@ -51,9 +56,15 @@ class DrawUtils {
             faceRect,
             // taruh di hasil gambar
             Rect(0, 0, faceRect.width(), faceRect.height()),
-            if (!shape) {fillBox} else {null}
+            if (!shape) {
+                fillBox
+            } else {
+                null
+            }
         )
-        if (!shape) {fillBox.xfermode = null}
+        if (!shape) {
+            fillBox.xfermode = null
+        }
         return tempBitmap
     }
 
@@ -76,8 +87,8 @@ class DrawUtils {
     fun swapFaces(
         bitmap: Bitmap,
         faces: MutableList<Face>,
-        pos: Int=0,
-        duplicate: Boolean=false
+        pos: Int = 0,
+        duplicate: Boolean = false
     ): Bitmap {
         // buat bitmap hasil
         val tempBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
@@ -94,7 +105,7 @@ class DrawUtils {
         val flipList = mutableListOf<Rect>()
         val angleList = mutableListOf<Float>()
         // buat matrix untuk flip path
-        val matrix = Matrix().apply {postScale(-1f, 1f, bitmap.width/2f, bitmap.height/2f)}
+        val matrix = Matrix().apply { postScale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f) }
 
         for (face in faces) {
             // gambar jalur lingkar wajah dengan fillbox
@@ -110,7 +121,7 @@ class DrawUtils {
             angleList.add(face.headEulerAngleY)
         }
         // flip canvas
-        flipCanvas.scale(-1f, 1f, bitmap.width/2f, bitmap.height/2f)
+        flipCanvas.scale(-1f, 1f, bitmap.width / 2f, bitmap.height / 2f)
         // fungsi untuk hanya mendapatkan area gambar yang terdapat pada fillbox
         fillBox.xfermode = PorterDuffXfermode(PorterDuff.Mode.SRC_IN)
         maskCanvas.drawBitmap(bitmap, 0f, 0f, fillBox)
@@ -127,7 +138,7 @@ class DrawUtils {
                 }
             }
             // cek arah wajah asli dan arah wajah yang akan ditukar
-            if ((angleList[index]>=0) == (angleList[i]>=0)) {
+            if ((angleList[index] >= 0) == (angleList[i] >= 0)) {
                 // gambar potongan wajah lain pada wajah lain
                 tempCanvas.drawBitmap(
                     // sumber gambar potongan wajah
@@ -164,24 +175,24 @@ class DrawUtils {
 
     // mendapatkan posisi kotak baru yang di flip
     private fun getFlipped(rect: Rect, bitWidth: Int): Rect {
-        val xLeft = bitWidth-(rect.left+rect.width())
+        val xLeft = bitWidth - (rect.left + rect.width())
         return Rect(
             xLeft,
             rect.top,
-            xLeft+rect.width(),
+            xLeft + rect.width(),
             rect.bottom
         )
     }
 
-//    // mendapatkan ukuran kotak baru yang tidak di luar gambar
-//    private fun getRectBound(bitmap: Bitmap, rect: Rect): Rect {
-//        return Rect(
-//            if (rect.left < 0) 0 else rect.left,
-//            if (rect.top < 0) 0 else rect.top,
-//            if (rect.right > bitmap.width) bitmap.width else rect.right,
-//            if (rect.bottom > bitmap.height) bitmap.height else rect.bottom
-//        )
-//    }
+    // mendapatkan ukuran kotak baru yang tidak di luar gambar
+    private fun getRectBound(bitmap: Bitmap, rect: Rect): Rect {
+        return Rect(
+            if (rect.left < 0) 0 else rect.left,
+            if (rect.top < 0) 0 else rect.top,
+            if (rect.right > bitmap.width) bitmap.width else rect.right,
+            if (rect.bottom > bitmap.height) bitmap.height else rect.bottom
+        )
+    }
 
     // mendapatkan jalur lingkar wajah untuk digambar
     private fun getFacePath(contourPoints: MutableList<PointF>): Path {
@@ -206,7 +217,7 @@ class DrawUtils {
     }
 
     // mendapatkan titik-titik untuk kotak dari lingkar wajah
-    private fun getFaceBound(contourPoints: MutableList<PointF>, size: Int=0): Rect {
+    private fun getFaceBound(contourPoints: MutableList<PointF>, size: Int = 0): Rect {
         val points = getCornerPoint(contourPoints)
         return Rect(
             floor(points[0]).toInt() - size, floor(points[1]).toInt() - size,
@@ -219,6 +230,7 @@ class DrawUtils {
         return (points[0] >= bound[0] && points[1] >= bound[1]
                 && points[2] <= bound[2] && points[3] <= bound[3])
     }
+
     // cek jika titik wajah berada dalam gambar
     fun checkFacePoint(bitmap: Bitmap, faces: MutableList<Face>): MutableList<Face> {
         val bound = intArrayOf(0, 0, bitmap.width, bitmap.height)
@@ -235,18 +247,20 @@ class DrawUtils {
     fun drawShapeFaces(
         bitmap: Bitmap,
         faces: MutableList<Face>,
-        shape: Boolean=true,
-        size: Int=0,
-        color: Int=Color.GREEN
+        shape: Boolean = true,
+        size: Int = 0,
+        color: Int = Color.GREEN
     ): Bitmap {
-        if (color != Color.GREEN) { strokeLine.color = color }
+        if (color != Color.GREEN) {
+            strokeLine.color = color
+        }
         // buat bitmap kosong dengan ukuran sesuai bitmap pilihan
         val tempBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val tempCanvas = Canvas(tempBitmap)
         tempCanvas.drawBitmap(bitmap, 0f, 0f, null)
 
         for (face in faces) {
-            val faceRect = resizeRect(face.boundingBox, size)
+            val faceRect = getRectBound(bitmap, resizeRect(face.boundingBox, size))
             if (shape) {
                 // gambar kotak disekitar area wajah
                 tempCanvas.drawRect(faceRect, strokeLine)
@@ -256,13 +270,21 @@ class DrawUtils {
                 //tempCanvas.drawCircle(n.exactCenterX(), n.exactCenterY(), n.width()/2f, strokeLine)
             }
         }
-        if (color != Color.GREEN) { strokeLine.color = Color.GREEN }
+        if (color != Color.GREEN) {
+            strokeLine.color = Color.GREEN
+        }
         return tempBitmap
     }
 
     // menggambar jalur lingkaran wajah pada gambar
-    fun drawContourFaces(bitmap: Bitmap, faces: MutableList<Face>, color: Int=Color.GREEN): Bitmap {
-        if (color != Color.GREEN) { strokeLine.color = color }
+    fun drawContourFaces(
+        bitmap: Bitmap,
+        faces: MutableList<Face>,
+        color: Int = Color.GREEN
+    ): Bitmap {
+        if (color != Color.GREEN) {
+            strokeLine.color = color
+        }
         // buat bitmap kosong dengan ukuran sesuai bitmap pilihan
         val tempBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val tempCanvas = Canvas(tempBitmap)
@@ -285,7 +307,9 @@ class DrawUtils {
                 }
             }*/
         }
-        if (color != Color.GREEN) { strokeLine.color = Color.GREEN }
+        if (color != Color.GREEN) {
+            strokeLine.color = Color.GREEN
+        }
         return tempBitmap
     }
 
@@ -294,12 +318,12 @@ class DrawUtils {
         val tempCanvas = Canvas(tempBitmap)
         tempCanvas.drawBitmap(bitmap, 0f, 0f, null)
 
-        val ratio = 1/(watermark.width/(bitmap.width*0.25f))
-        val space = (bitmap.width/100f)*2
-        val right = bitmap.width-(space)
-        val bottom = bitmap.height-(space)
-        val left = right-(watermark.width*ratio)
-        val top = bottom-(watermark.height*ratio)
+        val ratio = 1 / (watermark.width / (bitmap.width * 0.2f))
+        val space = (bitmap.width / 100f) * 2
+        val right = bitmap.width - (space)
+        val bottom = bitmap.height - (space)
+        val left = right - (watermark.width * ratio)
+        val top = bottom - (watermark.height * ratio)
         tempCanvas.drawBitmap(
             watermark,
             null,
@@ -308,7 +332,7 @@ class DrawUtils {
         )
         return tempBitmap
     }
-
+}
 //    private fun checkBoundingBox(rect: Rect, bound: IntArray): Boolean {
 //        return (rect.left >= bound[0] && rect.top >= bound[1]
 //                && rect.right <= bound[2] && rect.bottom <= bound[3]
@@ -359,4 +383,3 @@ class DrawUtils {
 //        }
 //        return facePoints
 //    }
-}

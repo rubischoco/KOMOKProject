@@ -31,7 +31,8 @@ class CropActivity : AppCompatActivity() {
     private lateinit var savedFaces: MutableList<Face>
 
     companion object {
-        const val IMAGE_PICK_CODE = 100
+        const val CAMERA_CODE = 100
+        const val GALLERY_CODE = 101
     }
 
     init {
@@ -62,7 +63,7 @@ class CropActivity : AppCompatActivity() {
         }
 
         button_change.setOnClickListener {
-            imageUtils.pickImageFromGallery(this, IMAGE_PICK_CODE)
+            imageUtils.getImageDialog(this, CAMERA_CODE, GALLERY_CODE)
         }
 
         button_shape.setOnClickListener {
@@ -115,12 +116,20 @@ class CropActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == IMAGE_PICK_CODE) {
-                imageUpload = Uri.parse(data?.data.toString())
-                image_preview.setImageURI(imageUpload)
-                detectFaces(imageUpload)
+            when (requestCode) {
+                CAMERA_CODE -> loadImage(imageUtils.cameraUri.toString())
+                GALLERY_CODE -> loadImage(data?.dataString)
+            }
+        } else {
+            when (requestCode) {
+                CAMERA_CODE -> imageUtils.cancelCamera(this)
             }
         }
+    }
+    private fun loadImage(data: String?) {
+        imageUpload = Uri.parse(data)
+        image_preview.setImageURI(imageUpload)
+        detectFaces(imageUpload)
     }
 
     @SuppressLint("SetTextI18n")
