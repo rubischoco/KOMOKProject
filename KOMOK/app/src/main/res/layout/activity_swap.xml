@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".SwapActivity">
+
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/text_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/title_swapface"
+        android:textAlignment="center"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="38dp"
+        android:layout_height="0dp"
+        android:background="@null"
+
+        android:drawableEnd="@drawable/button_back"
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_watermark"
+        android:layout_width="38dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:drawableStart="@drawable/button_watermark_on"
+
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintEnd_toStartOf="@+id/button_help"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_help"
+        android:layout_width="38dp"
+        android:layout_height="0dp"
+        android:background="@null"
+        android:drawableStart="@drawable/button_help"
+
+        app:layout_constraintBottom_toBottomOf="@+id/text_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/image_preview"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@android:color/black"
+        android:contentDescription="@string/image_preview"
+
+        app:layout_constraintBottom_toTopOf="@+id/text_info"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_title"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <TextView
+        android:id="@+id/text_info"
+        style="@style/text_info"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/text_info"
+        android:textAlignment="center"
+
+        app:layout_constraintBottom_toTopOf="@+id/button_swap"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_change"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:drawableStart="@drawable/button_gallery"
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button_duplicate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:text="@string/button_duplicate"
+        android:textColor="@android:color/white"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_swap"
+        app:layout_constraintStart_toEndOf="@+id/button_change" />
+
+    <Button
+        android:id="@+id/button_swap"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:text="@string/button_swap"
+        android:textColor="@android:color/white"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_save" />
+
+    <Button
+        android:id="@+id/button_save"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:drawableStart="@drawable/button_save"
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button_share" />
+
+    <Button
+        android:id="@+id/button_share"
+        android:layout_width="64dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_border"
+        android:drawableStart="@drawable/button_share"
+        android:paddingStart="16dp"
+        android:paddingEnd="0dp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
