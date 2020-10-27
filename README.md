@@ -1,6 +1,6 @@
 # Mobcom 113 - KOMOK Project
 
-### Komok (beta version) : [download](https://github.com/rubischoco/KOMOKProject/raw/sprint6/Komok-beta.apk)
+### Komok (beta version) : [download](https://github.com/rubischoco/KOMOKProject/raw/sprint7/Komok-beta.apk)
 
 ## Member
 1. [Ari Purnama Aji](https://github.com/AriPurnamaAji) - 1313617008
@@ -12,10 +12,6 @@
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
 | Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
-| Membuat UI | [Update tampilan swap dan crop](https://github.com/rubischoco/KOMOKProject/issues/14) | Completed | Fathur |
-| Fungsi gambar | [Sistem watermark](https://github.com/rubischoco/KOMOKProject/issues/15) | Completed | Fathur |
-| Face-recognition | [Crop face](https://github.com/rubischoco/KOMOKProject/issues/12) | Completed | Riza |
-| Face-recognition | [Swap face](https://github.com/rubischoco/KOMOKProject/issues/13) | Completed | Riza |
-| Fungsi gambar | [Sistem save gambar](https://github.com/rubischoco/KOMOKProject/issues/16) | Completed | Ari |
-| Fungsi gambar | [Sistem share gambar](https://github.com/rubischoco/KOMOKProject/issues/17) | Completed | Ari |
+| Membuat UI | [Membuat dialog pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/18) | Completed | Riza |
+| Fungsi gambar | [Menerapkan sistem pengambilan gambar dari kamera](https://github.com/rubischoco/KOMOKProject/issues/19) | Completed | Riza |
 | Membuat UI | [Buat login register](https://github.com/rubischoco/KOMOKProject/issues/10) | In Progress | Ari |
