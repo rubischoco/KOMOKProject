@@ -7,7 +7,7 @@
 2. [Fathurrahman Ikhsan](https://github.com/rubischoco) - 1313617022
 3. [M. Riza Farhandhy](https://github.com/MRizaF) - 1313617038
 
-## Sprint 7 Backlog
+## Sprint 8 Backlog
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
