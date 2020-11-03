@@ -23,12 +23,25 @@
         android:id="@+id/button_swap"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_border"
+        android:background="@drawable/dialog_background_gray"
         android:text="@string/button_swapface"
         android:textColor="@android:color/white"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_logo" />
+
+    <Button
+        android:id="@+id/button_user"
+        android:layout_width="36dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/dialog_background_gray"
+        android:drawableStart="@drawable/button_user"
+        android:paddingStart="6dp"
+        android:paddingEnd="0dp"
+
+        app:layout_constraintStart_toEndOf="@+id/button_swap"
         app:layout_constraintTop_toBottomOf="@+id/image_logo" />
 
     <Button

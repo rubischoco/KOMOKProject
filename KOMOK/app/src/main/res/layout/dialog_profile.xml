@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="@string/text_profile"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_background_white"
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/image_profile"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/image_logo"
+            android:background="@drawable/dialog_background_gray"
+            app:srcCompat="@drawable/button_user" />
+
+        <TextView
+            android:id="@+id/text_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/text_email"
+            android:textColor="@android:color/black"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"/>
+
+        <TextView
+            android:id="@+id/text_verify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="@string/text_verify"
+            android:textColor="@android:color/black" />
+
+        <Button
+            android:id="@+id/button_verify"
+            style="@style/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/buttonLogin"
+            android:paddingTop="5dp"
+            android:text="@string/button_verify" />
+
+        <Button
+            android:id="@+id/button_change"
+            style="@style/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:background="@color/buttonLogin"
+            android:paddingTop="5dp"
+            android:text="@string/button_change" />
+
+        <Button
+            android:id="@+id/button_logout"
+            style="@style/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_logout"
+            android:background="@color/buttonLogin"
+            android:paddingTop="5dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

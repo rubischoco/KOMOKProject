@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="240dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/text_title"
+        style="@style/text_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:text="@string/button_login"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/dialog_background_white"
+        android:padding="10dp">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_email"
+            app:hintTextColor="@android:color/black"
+            android:textColorHint="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/input_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="1"
+                android:textSize="14sp"
+                android:hint="@string/text_email"
+                android:inputType="textEmailAddress"
+                android:autofillHints="emailAddress"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_password"
+            app:hintTextColor="@android:color/black"
+            android:textColorHint="@android:color/black"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <EditText
+                android:id="@+id/input_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:maxLines="1"
+                android:textSize="14sp"
+                android:hint="@string/text_password"
+                android:inputType="textPassword"
+                android:autofillHints="password"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <ProgressBar
+            android:id="@+id/loading_login"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="32dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/text_forgot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="@string/text_forgot"
+            android:textAlignment="textEnd" />
+
+        <Button
+            android:id="@+id/button_login"
+            style="@style/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_login"
+            android:background="@color/buttonLogin"
+            android:paddingTop="5dp"/>
+
+        <Button
+            android:id="@+id/button_register"
+            style="@style/button_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/button_register"
+            android:background="@color/buttonRegister"
+            android:paddingTop="5dp"/>
+
+    </LinearLayout>
+
+</LinearLayout>

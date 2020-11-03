@@ -23,8 +23,8 @@
         android:layout_width="38dp"
         android:layout_height="0dp"
         android:background="@null"
-
         android:drawableEnd="@drawable/button_back"
+
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

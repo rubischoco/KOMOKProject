@@ -10,12 +10,11 @@
         style="@style/text_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="10dp"
         android:paddingTop="5dp"
-        android:paddingEnd="10dp"
         android:paddingBottom="5dp"
         android:text="@string/choose_title"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textAlignment="center"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -26,7 +25,7 @@
             android:id="@+id/button_camera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/dialog_background"
+            android:background="@drawable/dialog_background_gray"
             android:orientation="vertical">
 
             <ImageView
@@ -55,7 +54,7 @@
             android:id="@+id/button_gallery"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/dialog_background"
+            android:background="@drawable/dialog_background_gray"
             android:orientation="vertical">
 
             <ImageView

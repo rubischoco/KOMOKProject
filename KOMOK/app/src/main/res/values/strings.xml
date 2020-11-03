@@ -10,6 +10,18 @@
     <string name="choose_camera">Camera</string>
     <string name="choose_gallery">Gallery</string>
 
+    <string name="text_email">Email</string>
+    <string name="text_password">Password</string>
+    <string name="text_confirm">Confirm Password</string>
+    <string name="text_forgot">Forgot password?</string>
+    <string name="text_profile">Profile</string>
+    <string name="text_verify">Verified</string>
+    <string name="button_login">Login</string>
+    <string name="button_register">Register</string>
+    <string name="button_verify">Resend email verification</string>
+    <string name="button_change">Change password</string>
+    <string name="button_logout">Logout</string>
+
     <string name="title_swapface">KOMOK\nSwap Face</string>
     <string name="title_cropface">KOMOK\nCrop Face</string>
     <string name="title_about">KOMOK\nAbout</string>

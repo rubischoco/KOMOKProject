@@ -11,6 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.google.firebase.auth.FirebaseAuth
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
@@ -29,6 +30,7 @@ class SwapActivity : AppCompatActivity() {
     private lateinit var savedBitmap: Bitmap
     private lateinit var watermarkBitmap: Bitmap
     private lateinit var savedFaces: MutableList<Face>
+    private lateinit var firebaseAuth: FirebaseAuth
 
     companion object {
         const val CAMERA_CODE = 100
@@ -47,9 +49,18 @@ class SwapActivity : AppCompatActivity() {
         detector = FaceDetection.getClient(detectOptions)
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (firebaseAuth.currentUser != null){
+            firebaseAuth.currentUser?.reload()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_swap)
+
+        firebaseAuth = FirebaseAuth.getInstance()
+        val user = firebaseAuth.currentUser
 
         val watermarkOn = ContextCompat.getDrawable(this, R.drawable.button_watermark_on)
         val watermarkOff = ContextCompat.getDrawable(this, R.drawable.button_watermark_off)
@@ -63,15 +74,21 @@ class SwapActivity : AppCompatActivity() {
         button_back.setOnClickListener { finish() }
 
         button_watermark.setOnClickListener {
-            if (button_watermark.alpha == 1f) {
-                watermark = !watermark
-                image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
-                button_watermark.setCompoundDrawablesWithIntrinsicBounds(
-                    if (watermark) watermarkOn else watermarkOff,
-                    null,
-                    null,
-                    null
-                )
+            if (user != null) {
+                if (user.isEmailVerified) {
+                    if (button_watermark.alpha == 1f) {
+                        watermark = !watermark
+                        image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                        button_watermark.setCompoundDrawablesWithIntrinsicBounds(
+                            if (watermark) watermarkOn else watermarkOff,
+                            null,
+                            null,
+                            null
+                        )
+                    }
+                } else {
+                    Toast.makeText(this, "Verify your email first", Toast.LENGTH_SHORT).show()
+                }
             }
         }
 
