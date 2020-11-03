@@ -11,4 +11,4 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Menerapkan sistem verifikasi email](https://github.com/rubischoco/KOMOKProject/issues/10) | Completed | Ari |
+| Login Register | [Menerapkan sistem verifikasi email](https://github.com/rubischoco/KOMOKProject/issues/10) | Completed | Ari |
