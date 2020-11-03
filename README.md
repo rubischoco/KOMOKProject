@@ -1,6 +1,6 @@
 # Mobcom 113 - KOMOK Project
 
-### Komok (beta version) : [download](https://github.com/rubischoco/KOMOKProject/blob/sprint7/KOMOK-beta.apk)
+### Komok (beta version) : [download](https://github.com/rubischoco/KOMOKProject/blob/sprint8/KOMOK-beta.apk)
 
 ## Member
 1. [Ari Purnama Aji](https://github.com/AriPurnamaAji) - 1313617008
