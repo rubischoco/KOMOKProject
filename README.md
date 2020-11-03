@@ -14,4 +14,4 @@
 | Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
 | Membuat UI | [Membuat dialog pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/18) | Completed | Riza |
 | Fungsi gambar | [Menerapkan sistem pemilihan gambar dari kamera](https://github.com/rubischoco/KOMOKProject/issues/19) | Completed | Riza |
-| Login Register | [Membuat sistem login dan register](https://github.com/rubischoco/KOMOKProject/issues/10) | In Progress | Ari |
+| Login Register | [Membuat sistem login dan register](https://github.com/rubischoco/KOMOKProject/issues/21) | In Progress | Ari |
