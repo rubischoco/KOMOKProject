@@ -18,4 +18,3 @@
 | Face-recognition | [Swap face](https://github.com/rubischoco/KOMOKProject/issues/13) | Completed | Riza |
 | Fungsi gambar | [Sistem save gambar](https://github.com/rubischoco/KOMOKProject/issues/16) | Completed | Ari |
 | Fungsi gambar | [Sistem share gambar](https://github.com/rubischoco/KOMOKProject/issues/17) | Completed | Ari |
-| Membuat UI | [Buat login register](https://github.com/rubischoco/KOMOKProject/issues/10) | In Progress | Ari |
