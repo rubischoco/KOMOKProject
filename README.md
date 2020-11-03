@@ -11,7 +11,7 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
+| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | Canceled | Fathur |
 | Membuat UI | [Buat icon aplikasi](https://github.com/rubischoco/KOMOKProject/issues/9) | Completed | Fathur |
 | Membuat UI | [Buat about page](https://github.com/rubischoco/KOMOKProject/issues/5) | Completed | Ari |
 | Membuat UI | [Buat splashscreen](https://github.com/rubischoco/KOMOKProject/issues/6) | Completed | Riza |
