@@ -11,7 +11,7 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | Completed | Fathur |
+| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
 | Membuat UI | [Update tampilan swap dan crop](https://github.com/rubischoco/KOMOKProject/issues/14) | Completed | Fathur |
 | Fungsi gambar | [Sistem watermark](https://github.com/rubischoco/KOMOKProject/issues/15) | Completed | Fathur |
 | Face-recognition | [Crop face](https://github.com/rubischoco/KOMOKProject/issues/12) | Completed | Riza |
