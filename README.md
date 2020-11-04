@@ -13,3 +13,4 @@
 |-------|------|--------|-------------|
 | Login Register | [Menerapkan sistem verifikasi email](https://github.com/rubischoco/KOMOKProject/issues/20) | Completed | Ari |
 | Login Register | [Membuat sistem login dan register](https://github.com/rubischoco/KOMOKProject/issues/21) | Completed | Ari |
+| UI | [Membuat tampilan petunjuk](https://github.com/rubischoco/KOMOKProject/issues/22) | Completed | Fathur |
