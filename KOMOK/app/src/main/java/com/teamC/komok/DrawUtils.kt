@@ -35,7 +35,7 @@ class DrawUtils {
         size: Int = 0
     ): Bitmap {
         // mendapatkan titik kotak untuk wajah dan merubah ukuran
-//        val faceRect = resizeRect(curFace.boundingBox, size)
+        //val faceRect = resizeRect(curFace.boundingBox, size)
         val faceRect = getRectBound(bitmap, resizeRect(curFace.boundingBox, size))
         // buat bitmap kosong dengan ukuran kotak wajah yang akan diambil
         val tempBitmap = Bitmap.createBitmap(

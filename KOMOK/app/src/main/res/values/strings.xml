@@ -16,6 +16,11 @@
     <string name="text_forgot">Forgot password?</string>
     <string name="text_profile">Profile</string>
     <string name="text_verify">Verified</string>
+    <string name="text_reset">Reset Password</string>
+    <string name="text_change">Change Password</string>
+    <string name="text_old_pass">Old Password</string>
+    <string name="text_new_pass">New Password</string>
+    <string name="text_confirm_new">Confirm New Password</string>
     <string name="button_login">Login</string>
     <string name="button_register">Register</string>
     <string name="button_verify">Resend email verification</string>

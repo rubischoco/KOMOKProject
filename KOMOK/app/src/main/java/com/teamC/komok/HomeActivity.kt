@@ -2,6 +2,7 @@ package com.teamC.komok
 
 import android.Manifest
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -11,8 +12,11 @@ import android.view.View
 import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import kotlinx.android.synthetic.main.activity_home.*
+
 
 class HomeActivity : AppCompatActivity() {
     private val permissionUtils = PermissionUtils()
@@ -27,10 +31,12 @@ class HomeActivity : AppCompatActivity() {
         const val CAMERA_CODE2 = 103
         const val GALLERY_CODE1 = 104
         const val GALLERY_CODE2 = 105
+        const val DELAY: Long = 1500
     }
 
     override fun onStart() {
         super.onStart()
+        // user sudah login
         if (firebaseAuth.currentUser != null){
             firebaseAuth.currentUser?.reload()
             button_swap.setBackgroundResource(R.drawable.button_border)
@@ -45,20 +51,32 @@ class HomeActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         button_user.setOnClickListener {
+            // user sudah login
             if (firebaseAuth.currentUser != null) {
                 profileDialog()
-            } else {
+            }
+            // user belum login
+            else {
                 loginDialog()
             }
         }
 
         button_swap.setOnClickListener {
+            // user sudah login
             if (firebaseAuth.currentUser != null) {
-                if (permissionUtils.requestPermission(this, PERMISSION_CODE1,
-                        Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                // cek izin akses
+                if (permissionUtils.requestPermission(
+                        this,
+                        PERMISSION_CODE1,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )) {
                     imageUtils.getImageDialog(this, CAMERA_CODE1, GALLERY_CODE1)
                 }
-            } else {
+            }
+            // user belum login
+            else {
                 Toast.makeText(this, "You need to login first", Toast.LENGTH_SHORT).show()
 
                 loginDialog()
@@ -66,8 +84,14 @@ class HomeActivity : AppCompatActivity() {
         }
 
         button_crop.setOnClickListener {
-            if (permissionUtils.requestPermission(this, PERMISSION_CODE2,
-                    Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            // cek izin akses
+            if (permissionUtils.requestPermission(
+                    this,
+                    PERMISSION_CODE2,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )) {
                 imageUtils.getImageDialog(this, CAMERA_CODE2, GALLERY_CODE2)
             }
         }
@@ -78,24 +102,36 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
-    //handle requested permission result
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+    // setelah izin akses pertama kali
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        // cek izin akses (swap)
         if (permissionUtils.permissionGranted(requestCode, PERMISSION_CODE1, grantResults)) {
             imageUtils.getImageDialog(this, CAMERA_CODE1, GALLERY_CODE1)
         }
+        // cek izin akses (crop)
         else if (permissionUtils.permissionGranted(requestCode, PERMISSION_CODE2, grantResults)) {
             imageUtils.getImageDialog(this, CAMERA_CODE2, GALLERY_CODE2)
         }
     }
 
-    //handle result of picked image
+    // setelah mendapatkan suatu gambar
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                CAMERA_CODE1 -> myStartActivity(SwapActivity::class.java, imageUtils.cameraUri.toString())
-                CAMERA_CODE2 -> myStartActivity(CropActivity::class.java, imageUtils.cameraUri.toString())
+                CAMERA_CODE1 -> myStartActivity(
+                    SwapActivity::class.java,
+                    imageUtils.cameraUri.toString()
+                )
+                CAMERA_CODE2 -> myStartActivity(
+                    CropActivity::class.java,
+                    imageUtils.cameraUri.toString()
+                )
                 GALLERY_CODE1 -> myStartActivity(SwapActivity::class.java, data?.dataString)
                 GALLERY_CODE2 -> myStartActivity(CropActivity::class.java, data?.dataString)
             }
@@ -111,7 +147,7 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    private fun loginDialog(email: String="") {
+    private fun loginDialog(email: String = "") {
         val customDialog = Dialog(this).apply {
             requestWindowFeature(Window.FEATURE_NO_TITLE)
             setContentView(R.layout.dialog_login)
@@ -131,7 +167,9 @@ class HomeActivity : AppCompatActivity() {
         inputHighlightRemove(inputEmail)
 
         textForgot.setOnClickListener {
-            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
+            customDialog.dismiss()
+
+            resetDialog()
         }
 
         buttonLogin.setOnClickListener {
@@ -139,37 +177,41 @@ class HomeActivity : AppCompatActivity() {
             val dataPassword = inputPassword.text.toString()
             var check = true
 
+            // email tidak sesuai
             if (!Patterns.EMAIL_ADDRESS.matcher(dataEmail).matches()) {
                 inputEmail.error = "email not valid"
                 inputEmail.requestFocus()
                 check = false
             }
+            // password kurang dari 6 karakter
             if (dataPassword.length < 6) {
-                inputPassword.error = "password must be at last 6 characters"
+                inputPassword.setError("password must be at least 6 characters", null)
                 if (check) {
                     inputPassword.requestFocus()
                     check = false
                 }
             }
 
+            // email dan password sesuai
             if (check) {
                 loadingLogin.visibility = View.VISIBLE
                 // login user
                 firebaseAuth.signInWithEmailAndPassword(dataEmail, dataPassword)
-                    .addOnCompleteListener(this) {
-                        handler.postDelayed({}, 2000)
-
+                    .addOnCompleteListener(this) { login ->
+                        handler.postDelayed({}, DELAY)
                         loadingLogin.visibility = View.GONE
 
-                        if (it.isSuccessful){
+                        // login user berhasil
+                        if (login.isSuccessful){
                             customDialog.dismiss()
 
                             button_swap.setBackgroundResource(R.drawable.button_border)
                             button_user.setBackgroundResource(R.drawable.button_border)
                             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
                         }
+                        // login user gagal
                         else {
-                            Toast.makeText(this, it.exception?.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, login.exception?.message, Toast.LENGTH_SHORT).show()
                         }
                     }
             }
@@ -206,54 +248,139 @@ class HomeActivity : AppCompatActivity() {
             val dataPassword2 = inputPassword2.text.toString()
             var check = true
 
+            // email tidak sesuai
             if (!Patterns.EMAIL_ADDRESS.matcher(dataEmail).matches()) {
                 inputEmail.error = "email not valid"
                 inputEmail.requestFocus()
                 check = false
             }
+            // password kurang dari 6 karakter
             if (dataPassword1.length < 6) {
-                inputPassword1.error = "password must be at last 6 characters"
+                inputPassword1.setError("password must be at least 6 characters", null)
                 if (check) {
                     inputPassword1.requestFocus()
                     check = false
                 }
             }
+            // konfirmasi password tidak sesuai
             else if (dataPassword1 != dataPassword2) {
-                inputPassword2.error = "confirm password does not match"
+                inputPassword2.setError("confirm password does not match", null)
                 if (check) {
                     inputPassword2.requestFocus()
                     check = false
                 }
             }
 
+            // email dan password sesuai
             if (check) {
                 loadingRegister.visibility = View.VISIBLE
                 // mendaftarkan user
                 firebaseAuth.createUserWithEmailAndPassword(dataEmail, dataPassword1)
                     .addOnCompleteListener(this) { register ->
-                        handler.postDelayed({}, 2000)
+                        handler.postDelayed({}, DELAY)
+                        loadingRegister.visibility = View.GONE
 
+                        // mendaftarkan user berhasil
                         if (register.isSuccessful){
+                            loadingRegister.visibility = View.VISIBLE
+                            // login user (mengirimkan email verifikasi)
                             firebaseAuth.signInWithEmailAndPassword(dataEmail, dataPassword1)
-                                .addOnCompleteListener(this) {
+                                .addOnCompleteListener(this) { login ->
+                                    handler.postDelayed({}, DELAY)
                                     loadingRegister.visibility = View.GONE
 
-                                    if (it.isSuccessful) {
+                                    // login user berhasil
+                                    if (login.isSuccessful) {
                                         customDialog.dismiss()
 
                                         firebaseAuth.currentUser?.sendEmailVerification()
                                         firebaseAuth.signOut()
 
                                         loginDialog(dataEmail)
-                                        Toast.makeText(this, "Register successful!\nPlease login and verify your email :)", Toast.LENGTH_LONG).show()
-                                    } else {
-                                        Toast.makeText(this, it.exception?.message, Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(
+                                            this,
+                                            "Register successful!\nPlease verify your email first then login",
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                    // login user gagal
+                                    else {
+                                        loginDialog(dataEmail)
+                                        Toast.makeText(
+                                            this,
+                                            "Register successful!\nPlease login and resend email verification",
+                                            Toast.LENGTH_LONG
+                                        ).show()
                                     }
                                 }
                         }
+                        // mendaftarkan user gagal
                         else {
-                            loadingRegister.visibility = View.GONE
-                            Toast.makeText(this, register.exception?.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this,
+                                register.exception?.message,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
+        }
+
+        buttonLogin.setOnClickListener {
+            customDialog.dismiss()
+
+            loginDialog()
+        }
+    }
+
+    private fun resetDialog() {
+        val customDialog = Dialog(this).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_reset_password)
+            setCancelable(true)
+        }
+        customDialog.show()
+
+        val inputEmail = customDialog.findViewById<EditText>(R.id.input_email)
+        val loadingReset = customDialog.findViewById<ProgressBar>(R.id.loading_reset)
+        val buttonReset = customDialog.findViewById<Button>(R.id.button_reset)
+        val buttonLogin = customDialog.findViewById<Button>(R.id.button_login)
+
+        loadingReset.visibility = View.GONE
+
+        buttonReset.setOnClickListener {
+            val dataEmail = inputEmail.text.toString()
+
+            // email tidak sesuai
+            if (!Patterns.EMAIL_ADDRESS.matcher(dataEmail).matches()) {
+                inputEmail.error = "email not valid"
+                inputEmail.requestFocus()
+            }
+            // email sesuai
+            else {
+                loadingReset.visibility = View.VISIBLE
+
+                // mengirim email reset password
+                firebaseAuth.sendPasswordResetEmail(dataEmail)
+                    .addOnCompleteListener { reset ->
+                        handler.postDelayed({}, DELAY)
+                        loadingReset.visibility = View.GONE
+
+                        // mengirim email reset berhasil
+                        if (reset.isSuccessful) {
+                            Toast.makeText(
+                                this,
+                                "Email reset password send successfully!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        // mengirim email reset gagal
+                        else {
+                            Toast.makeText(
+                                this,
+                                "${reset.exception?.message}",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
             }
@@ -285,26 +412,150 @@ class HomeActivity : AppCompatActivity() {
         textEmail.setText("Email : ${firebaseAuth.currentUser?.email}")
         textVerify.setText("Verified : $userVerify")
 
+        // user sudah verify
         if (userVerify!!) {
             buttonVerify.visibility = View.GONE
-        } else {
+        }
+        // user belum verify
+        else {
             buttonVerify.setOnClickListener {
-                user.sendEmailVerification().addOnCompleteListener {
-                    if (it.isSuccessful){
-                        Toast.makeText(this, "Email verification resend successfully", Toast.LENGTH_SHORT).show()
+                // mengirim email verifikasi
+                user.sendEmailVerification().addOnCompleteListener { verify->
+                    // mengirim email verifikasi berhasil
+                    if (verify.isSuccessful){
+                        Toast.makeText(
+                            this,
+                            "Email verification resend successfully",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+                    // mengirim email verifikasi gagal
                     else{
-                        Toast.makeText(this, "${it.exception?.message}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this,
+                            "${verify.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
         }
 
         buttonChange.setOnClickListener {
-            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
+            customDialog.dismiss()
+
+            changePassDialog()
         }
 
         buttonLogout.setOnClickListener {
+            logoutDialog(customDialog)
+        }
+    }
+
+    private fun changePassDialog() {
+        val customDialog = Dialog(this).apply {
+            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setContentView(R.layout.dialog_change_password)
+            setCancelable(true)
+        }
+        customDialog.show()
+
+        val inputOldPass = customDialog.findViewById<EditText>(R.id.input_password0)
+        val inputNewPass1 = customDialog.findViewById<EditText>(R.id.input_password1)
+        val inputNewPass2 = customDialog.findViewById<EditText>(R.id.input_password2)
+        val loadingChange = customDialog.findViewById<ProgressBar>(R.id.loading_change)
+        val buttonChange = customDialog.findViewById<Button>(R.id.button_change)
+        val buttonProfile = customDialog.findViewById<Button>(R.id.button_profile)
+        val user = firebaseAuth.currentUser
+
+        loadingChange.visibility = View.GONE
+
+        buttonChange.setOnClickListener {
+            val dataOldPass = inputOldPass.text.toString()
+            val dataNewPass1 = inputNewPass1.text.toString()
+            val dataNewPass2 = inputNewPass2.text.toString()
+            var check = true
+
+            user?.let { user ->
+                // cek password lama user
+                val userCredential = EmailAuthProvider.getCredential(user.email!!, dataOldPass)
+                user.reauthenticate(userCredential).addOnCompleteListener { authenticate ->
+                    // password lama user sesuai
+                    if (authenticate.isSuccessful){
+                        // password baru kurang dari 6 karakter
+                        if (dataNewPass1.length < 6) {
+                            inputNewPass1.setError("new password must be at least 6 characters", null)
+                            inputNewPass1.requestFocus()
+                            check = false
+                        }
+                        // konfirmasi password baru tidak sesuai
+                        else if (dataNewPass1 != dataNewPass2) {
+                            inputNewPass2.setError("confirm new password does not match", null)
+                            inputNewPass2.requestFocus()
+                            check = false
+                        }
+
+                        // password baru sesuai
+                        if (check) {
+                            loadingChange.visibility = View.VISIBLE
+                            // update password user
+                            user.updatePassword(dataNewPass1).addOnCompleteListener { update ->
+                                handler.postDelayed({}, DELAY)
+                                loadingChange.visibility = View.GONE
+
+                                // update password berhasil
+                                if (update.isSuccessful) {
+                                    customDialog.dismiss()
+
+                                    profileDialog()
+                                    Toast.makeText(
+                                        this,
+                                        "Password changed successfully!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                // update password gagal
+                                else {
+                                    Toast.makeText(
+                                        this,
+                                        "${update.exception?.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                        }
+                    }
+                    // password lama tidak sesuai
+                    else if (authenticate.exception is FirebaseAuthInvalidCredentialsException){
+                        inputOldPass.error = "old password does not match"
+                        inputOldPass.requestFocus()
+                    }
+                    // error
+                    else{
+                        Toast.makeText(
+                            this,
+                            "${authenticate.exception?.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            }
+        }
+
+        buttonProfile.setOnClickListener {
+            customDialog.dismiss()
+
+            profileDialog()
+        }
+    }
+
+    private fun logoutDialog(customDialog: Dialog) {
+        // setup the alert builder
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Logout Account")
+        builder.setMessage("Are you sure you want to logout?")
+        // add the buttons
+        builder.setPositiveButton("Yes") { _, _ ->
             customDialog.dismiss()
 
             firebaseAuth.signOut()
@@ -312,6 +563,10 @@ class HomeActivity : AppCompatActivity() {
             button_user.setBackgroundResource(R.drawable.dialog_background_gray)
             Toast.makeText(this, "Logout successful!", Toast.LENGTH_SHORT).show()
         }
+        builder.setNegativeButton("No", null)
+        // create and show the alert dialog
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
     }
 
     private fun inputHighlightRemove(input: EditText) {

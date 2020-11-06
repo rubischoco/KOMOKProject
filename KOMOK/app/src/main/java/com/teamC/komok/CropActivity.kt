@@ -106,7 +106,7 @@ class CropActivity : AppCompatActivity() {
 
         button_save.setOnClickListener {
             if (button_save.alpha == 1f) {
-                showSaveDialog()
+                saveDialog()
             } else {
                 Toast.makeText(this, "No face data", Toast.LENGTH_SHORT).show()
             }
@@ -166,7 +166,7 @@ class CropActivity : AppCompatActivity() {
         }
     }
 
-    private fun showSaveDialog() {
+    private fun saveDialog() {
         // setup the alert builder
         val builder: AlertDialog.Builder = AlertDialog.Builder(this)
         builder.setTitle("Save Image")
