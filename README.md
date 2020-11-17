@@ -11,10 +11,9 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress | Fathur |
-| Membuat UI | [Update tampilan swap dan crop](https://github.com/rubischoco/KOMOKProject/issues/14) | Completed | Fathur |
-| Fungsi gambar | [Sistem watermark](https://github.com/rubischoco/KOMOKProject/issues/15) | Completed | Fathur |
-| Face-recognition | [Crop face](https://github.com/rubischoco/KOMOKProject/issues/12) | Completed | Riza |
-| Face-recognition | [Swap face](https://github.com/rubischoco/KOMOKProject/issues/13) | Completed | Riza |
-| Fungsi gambar | [Sistem save gambar](https://github.com/rubischoco/KOMOKProject/issues/16) | Completed | Ari |
-| Fungsi gambar | [Sistem share gambar](https://github.com/rubischoco/KOMOKProject/issues/17) | Completed | Ari |
+| Saya bisa melihat hasil editan gambar | [Update tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/14) | Completed | Fathur |
+| Saya bisa memakai watermark pada hasil editan gambar | [Sistem watermark](https://github.com/rubischoco/KOMOKProject/issues/15) | Completed | Fathur |
+| Saya bisa melakukan crop face | [Crop face](https://github.com/rubischoco/KOMOKProject/issues/12) | Completed | Riza |
+| Saya bisa melakukan swap face | [Swap face](https://github.com/rubischoco/KOMOKProject/issues/13) | Completed | Riza |
+| Saya bisa menyimpan hasil editan gambar | [Sistem save gambar](https://github.com/rubischoco/KOMOKProject/issues/16) | Completed | Ari |
+| Saya bisa menyebarluaskan hasil editan gambar | [Sistem share gambar](https://github.com/rubischoco/KOMOKProject/issues/17) | Completed | Ari |
