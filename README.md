@@ -7,9 +7,7 @@
 
 ## Sprint 2 Backlog
 
-| Story | Task | Status | Contributor |
-|-------|------|--------|-------------|
-| Membuat UI | [Membuat tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/4) | Completed | Riza |
-| Membuat UI | [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3) | In Progress | Ari |
-| Membuat UI | [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2) | In Progress | Fathur |
-| Membuat UI | [Buat Logo](https://github.com/rubischoco/KOMOKProject/issues/1) | Completed | Fathur |
+1. [Membuat tampilan hasil editan gambar](https://github.com/rubischoco/KOMOKProject/issues/4)
+2. [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3)
+3. [Buat Logo](https://github.com/rubischoco/KOMOKProject/issues/2)
+4. [Buat Mockup](https://github.com/rubischoco/KOMOKProject/issues/1)
