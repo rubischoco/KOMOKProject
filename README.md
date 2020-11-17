@@ -11,10 +11,8 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | In Progress| Fathur |
-| Membuat UI | [Buat icon aplikasi](https://github.com/rubischoco/KOMOKProject/issues/9) | Completed | Fathur |
-| Membuat UI | [Buat about page](https://github.com/rubischoco/KOMOKProject/issues/5) | Completed | Ari |
-| Membuat UI | [Buat splashscreen](https://github.com/rubischoco/KOMOKProject/issues/6) | Completed | Riza |
-| Fungsi gambar | [Menerapkan sistem pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/8) | Completed | Riza |
+| Saya bisa masuk ke home page | [Buat about page](https://github.com/rubischoco/KOMOKProject/issues/5) | Completed | Ari |
+| Saya bisa masuk ke home page | [Buat splashscreen](https://github.com/rubischoco/KOMOKProject/issues/6) | Completed | Fathur |
+| Saya bisa memilih gambar dari galeri | [Menerapkan sistem pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/8) | Completed | Riza |
 
 
