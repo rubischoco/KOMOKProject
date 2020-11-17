@@ -11,8 +11,8 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Login Register | [Menerapkan sistem verifikasi email](https://github.com/rubischoco/KOMOKProject/issues/20) | Completed | Ari |
-| Login Register | [Membuat sistem login dan register](https://github.com/rubischoco/KOMOKProject/issues/21) | Completed | Ari |
-| Membuat UI | [Membuat tampilan petunjuk](https://github.com/rubischoco/KOMOKProject/issues/22) | To Do | Fathur |
-| Login Register | [Menerapkan sistem reset password](https://github.com/rubischoco/KOMOKProject/issues/23) | Completed | Riza |
-| Login Register | [Menerapkan sistem ganti password](https://github.com/rubischoco/KOMOKProject/issues/24) | Completed | Riza |
+| Saya bisa melakukan verifikasi akun | [Menerapkan sistem verifikasi email](https://github.com/rubischoco/KOMOKProject/issues/20) | Completed | Ari |
+| Saya bisa melakukan verifikasi akun | [Membuat sistem login dan register](https://github.com/rubischoco/KOMOKProject/issues/21) | Completed | Ari |
+| Saya bisa mendapatkan petunjuk penggunaan aplikasi | [Membuat tampilan petunjuk](https://github.com/rubischoco/KOMOKProject/issues/22) | To Do | Fathur |
+| Saya bisa mengganti password akun | [Menerapkan sistem reset password](https://github.com/rubischoco/KOMOKProject/issues/23) | Completed | Riza |
+| Saya bisa mengganti password akun | [Menerapkan sistem ganti password](https://github.com/rubischoco/KOMOKProject/issues/24) | Completed | Riza |
