@@ -11,4 +11,6 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Membuat tampilan petunjuk](https://github.com/rubischoco/KOMOKProject/issues/22) | To Do | Fathur |
+| Saya bisa mendapatkan petunjuk penggunaan aplikasi | [Membuat tampilan petunjuk](https://github.com/rubischoco/KOMOKProject/issues/22) | In Progress | Fathur |
+| Saya bisa melakukan swap face dengan orang terkenal | [Membuat web service](https://github.com/rubischoco/KOMOKProject/issues/25)| In Progress | Ari |
+| Saya bisa melakukan swap face dengan orang terkenal | [Membuat integrasi dari database ke aplikasi](https://github.com/rubischoco/KOMOKProject/issues/26)| In Progress | Riza |
