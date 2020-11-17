@@ -7,10 +7,7 @@
 
 ## Sprint 3 Backlog
 
-| Story | Task | Status | Contributor |
-|-------|------|--------|-------------|
-| Membuat UI | [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3) | In Progress | Ari |
-| Membuat UI | [Buat icon aplikasi](https://github.com/rubischoco/KOMOKProject/issues/9) | In Progress | Fathur |
-| Membuat UI | [Bikin Mock-Up](https://github.com/rubischoco/KOMOKProject/issues/2) | In Progress | Fathur |
-| Fungsi gambar | [Buat sistem pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/8) | In Progress | Riza |
+1. [Membuat tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/3)
+2. [Buat sistem pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/8)
+3. [Buat icon aplikasi](https://github.com/rubischoco/KOMOKProject/issues/9)
 
