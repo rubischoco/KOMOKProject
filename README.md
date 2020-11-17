@@ -11,7 +11,6 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Membuat UI | [Update tampilan home page](https://github.com/rubischoco/KOMOKProject/issues/7) | Completed | Fathur |
-| Membuat UI | [Membuat dialog pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/18) | Completed | Riza |
-| Fungsi gambar | [Menerapkan sistem pemilihan gambar dari kamera](https://github.com/rubischoco/KOMOKProject/issues/19) | Completed | Riza |
-| Login Register | [Membuat sistem login dan register](https://github.com/rubischoco/KOMOKProject/issues/21) | In Progress | Ari |
+| Saya bisa menangkap gambar dari kamera | [Membuat dialog pemilihan gambar](https://github.com/rubischoco/KOMOKProject/issues/18) | Completed | Fathur |
+| Saya bisa menangkap gambar dari kamera | [Menerapkan sistem pemilihan gambar dari kamera](https://github.com/rubischoco/KOMOKProject/issues/19) | Completed | Riza |
+| Saya bisa membuat akun | [Membuat sistem login dan register](https://github.com/rubischoco/KOMOKProject/issues/21) | In Progress | Ari |
