@@ -14,4 +14,10 @@ Fungsi dari aplikasi ini yaitu :
 3. [M. Riza Farhandhy](https://github.com/MRizaF) - 1313617038
 
 ## Product Backlog
--> [Product Backlog Table](https://docs.google.com/spreadsheets/d/1FXyzIFm2AvV1hARPRN1fpMccrpSSxL1ATb-We1RKoMg/edit?usp=sharing)
+-> [Link Product Backlog Table](https://docs.google.com/spreadsheets/d/1FXyzIFm2AvV1hARPRN1fpMccrpSSxL1ATb-We1RKoMg/edit?usp=sharing)
+
+## Web Service
+-> [Link Web Service](https://github.com/rubischoco/KOMOKProject_2)
+
+## Playstore
+-> [Link Playstore](https://github.com/rubischoco/KOMOKProject)
