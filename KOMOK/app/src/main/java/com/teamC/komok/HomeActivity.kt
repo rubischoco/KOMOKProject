@@ -1,6 +1,7 @@
 package com.teamC.komok
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.Dialog
@@ -9,12 +10,13 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Patterns
 import android.view.View
-import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.teamC.komok.utils.ImageUtils
+import com.teamC.komok.utils.PermissionUtils
 import kotlinx.android.synthetic.main.activity_home.*
 
 
@@ -27,10 +29,13 @@ class HomeActivity : AppCompatActivity() {
     companion object {
         const val PERMISSION_CODE1 = 100
         const val PERMISSION_CODE2 = 101
-        const val CAMERA_CODE1 = 102
-        const val CAMERA_CODE2 = 103
-        const val GALLERY_CODE1 = 104
-        const val GALLERY_CODE2 = 105
+        const val PERMISSION_CODE3 = 102
+        const val CAMERA_CODE1 = 103
+        const val CAMERA_CODE2 = 104
+        const val CAMERA_CODE3 = 105
+        const val GALLERY_CODE1 = 106
+        const val GALLERY_CODE2 = 107
+        const val GALLERY_CODE3 = 108
         const val DELAY: Long = 1500
     }
 
@@ -39,17 +44,19 @@ class HomeActivity : AppCompatActivity() {
         // user sudah login
         if (firebaseAuth.currentUser != null){
             firebaseAuth.currentUser?.reload()
-            button_swap.setBackgroundResource(R.drawable.button_border)
-            button_user.setBackgroundResource(R.drawable.button_border)
+            toggleButton(true)
         }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        // untuk jeda
         handler = Handler()
+        // untuk login akun
         firebaseAuth = FirebaseAuth.getInstance()
 
+        // tombol akun
         button_user.setOnClickListener {
             // user sudah login
             if (firebaseAuth.currentUser != null) {
@@ -61,28 +68,21 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        // tombol swap face
         button_swap.setOnClickListener {
-            // user sudah login
-            if (firebaseAuth.currentUser != null) {
-                // cek izin akses
-                if (permissionUtils.requestPermission(
-                        this,
-                        PERMISSION_CODE1,
-                        Manifest.permission.CAMERA,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )) {
-                    imageUtils.getImageDialog(this, CAMERA_CODE1, GALLERY_CODE1)
-                }
-            }
-            // user belum login
-            else {
-                Toast.makeText(this, "You need to login first", Toast.LENGTH_SHORT).show()
-
-                loginDialog()
+            // cek izin akses
+            if (permissionUtils.requestPermission(
+                    this,
+                    PERMISSION_CODE1,
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )) {
+                imageUtils.getImageDialog(this, CAMERA_CODE1, GALLERY_CODE1)
             }
         }
 
+        // tombol crop face
         button_crop.setOnClickListener {
             // cek izin akses
             if (permissionUtils.requestPermission(
@@ -96,6 +96,31 @@ class HomeActivity : AppCompatActivity() {
             }
         }
 
+        // tombol mix face
+        button_mix.setOnClickListener {
+            // user sudah login
+            if (firebaseAuth.currentUser != null) {
+                // cek izin akses
+                if (permissionUtils.requestPermission(
+                        this,
+                        PERMISSION_CODE3,
+                        Manifest.permission.CAMERA,
+                        Manifest.permission.READ_EXTERNAL_STORAGE,
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
+                ) {
+                    imageUtils.getImageDialog(this, CAMERA_CODE3, GALLERY_CODE3)
+                }
+            }
+            // user belum login
+            else {
+                Toast.makeText(this, "You need to login first", Toast.LENGTH_SHORT).show()
+
+                loginDialog()
+            }
+        }
+
+        // tombol about
         button_about.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
@@ -117,6 +142,10 @@ class HomeActivity : AppCompatActivity() {
         else if (permissionUtils.permissionGranted(requestCode, PERMISSION_CODE2, grantResults)) {
             imageUtils.getImageDialog(this, CAMERA_CODE2, GALLERY_CODE2)
         }
+        // cek izin akses (mix)
+        else if (permissionUtils.permissionGranted(requestCode, PERMISSION_CODE3, grantResults)) {
+            imageUtils.getImageDialog(this, CAMERA_CODE3, GALLERY_CODE3)
+        }
     }
 
     // setelah mendapatkan suatu gambar
@@ -124,20 +153,17 @@ class HomeActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
-                CAMERA_CODE1 -> myStartActivity(
-                    SwapActivity::class.java,
-                    imageUtils.cameraUri.toString()
-                )
-                CAMERA_CODE2 -> myStartActivity(
-                    CropActivity::class.java,
-                    imageUtils.cameraUri.toString()
-                )
+                CAMERA_CODE1 -> myStartActivity(SwapActivity::class.java, imageUtils.cameraUri.toString())
+                CAMERA_CODE2 -> myStartActivity(CropActivity::class.java, imageUtils.cameraUri.toString())
+                CAMERA_CODE3 -> myStartActivity(MixActivity::class.java, imageUtils.cameraUri.toString())
+
                 GALLERY_CODE1 -> myStartActivity(SwapActivity::class.java, data?.dataString)
                 GALLERY_CODE2 -> myStartActivity(CropActivity::class.java, data?.dataString)
+                GALLERY_CODE3 -> myStartActivity(MixActivity::class.java, data?.dataString)
             }
         } else {
             when (requestCode) {
-                CAMERA_CODE1, CAMERA_CODE2 -> imageUtils.cancelCamera(this)
+                CAMERA_CODE1, CAMERA_CODE2, CAMERA_CODE3 -> imageUtils.cancelCamera(this)
             }
         }
     }
@@ -149,7 +175,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun loginDialog(email: String = "") {
         val customDialog = Dialog(this).apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setTitle(null)
             setContentView(R.layout.dialog_login)
             setCancelable(true)
         }
@@ -205,8 +231,7 @@ class HomeActivity : AppCompatActivity() {
                         if (login.isSuccessful){
                             customDialog.dismiss()
 
-                            button_swap.setBackgroundResource(R.drawable.button_border)
-                            button_user.setBackgroundResource(R.drawable.button_border)
+                            toggleButton(true)
                             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
                         }
                         // login user gagal
@@ -226,7 +251,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun registerDialog() {
         val customDialog = Dialog(this).apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setTitle(null)
             setContentView(R.layout.dialog_register)
             setCancelable(true)
         }
@@ -335,7 +360,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun resetDialog() {
         val customDialog = Dialog(this).apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setTitle((null))
             setContentView(R.layout.dialog_reset_password)
             setCancelable(true)
         }
@@ -393,9 +418,10 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SetTextI18n")
     private fun profileDialog() {
         val customDialog = Dialog(this).apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setTitle(null)
             setContentView(R.layout.dialog_profile)
             setCancelable(true)
         }
@@ -409,8 +435,8 @@ class HomeActivity : AppCompatActivity() {
         val user = firebaseAuth.currentUser
         val userVerify = user?.isEmailVerified
 
-        textEmail.setText("Email : ${firebaseAuth.currentUser?.email}")
-        textVerify.setText("Verified : $userVerify")
+        textEmail.text = "Email : ${firebaseAuth.currentUser?.email}"
+        textVerify.text = "Verified : $userVerify"
 
         // user sudah verify
         if (userVerify!!) {
@@ -454,7 +480,7 @@ class HomeActivity : AppCompatActivity() {
 
     private fun changePassDialog() {
         val customDialog = Dialog(this).apply {
-            requestWindowFeature(Window.FEATURE_NO_TITLE)
+            setTitle(null)
             setContentView(R.layout.dialog_change_password)
             setCancelable(true)
         }
@@ -559,14 +585,20 @@ class HomeActivity : AppCompatActivity() {
             customDialog.dismiss()
 
             firebaseAuth.signOut()
-            button_swap.setBackgroundResource(R.drawable.dialog_background_gray)
-            button_user.setBackgroundResource(R.drawable.dialog_background_gray)
+            toggleButton(false)
             Toast.makeText(this, "Logout successful!", Toast.LENGTH_SHORT).show()
         }
         builder.setNegativeButton("No", null)
         // create and show the alert dialog
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    private fun toggleButton(bool: Boolean) {
+        val mode = if (bool) R.drawable.button_border else R.drawable.dialog_background_gray
+
+        button_mix.setBackgroundResource(mode)
+        button_user.setBackgroundResource(mode)
     }
 
     private fun inputHighlightRemove(input: EditText) {

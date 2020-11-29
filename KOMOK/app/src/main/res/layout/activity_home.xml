@@ -9,7 +9,7 @@
     <ImageView
         android:id="@+id/image_logo"
         android:layout_width="300dp"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:contentDescription="@string/image_logo"
         android:src="@drawable/komok_logo"
 
@@ -17,31 +17,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3" />
+        app:layout_constraintVertical_bias="0.25" />
 
     <Button
         android:id="@+id/button_swap"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
-        android:background="@drawable/dialog_background_gray"
+        android:background="@drawable/button_border"
         android:text="@string/button_swapface"
         android:textColor="@android:color/white"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/image_logo" />
-
-    <Button
-        android:id="@+id/button_user"
-        android:layout_width="36dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/dialog_background_gray"
-        android:drawableStart="@drawable/button_user"
-        android:paddingStart="6dp"
-        android:paddingEnd="0dp"
-
-        app:layout_constraintStart_toEndOf="@+id/button_swap"
         app:layout_constraintTop_toBottomOf="@+id/image_logo" />
 
     <Button
@@ -58,6 +45,32 @@
         app:layout_constraintTop_toBottomOf="@+id/button_swap" />
 
     <Button
+        android:id="@+id/button_mix"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/button_space"
+        android:background="@drawable/dialog_background_gray"
+        android:text="@string/button_mixface"
+        android:textColor="@android:color/white"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_crop" />
+
+    <Button
+        android:id="@+id/button_user"
+        android:layout_width="36dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="@drawable/dialog_background_gray"
+        android:drawableStart="@drawable/button_user"
+        android:paddingStart="6dp"
+        android:paddingEnd="0dp"
+
+        app:layout_constraintStart_toEndOf="@id/button_mix"
+        app:layout_constraintTop_toTopOf="@id/button_mix" />
+
+    <Button
         android:id="@+id/button_about"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
@@ -68,6 +81,6 @@
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_crop" />
+        app:layout_constraintTop_toBottomOf="@+id/button_mix" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

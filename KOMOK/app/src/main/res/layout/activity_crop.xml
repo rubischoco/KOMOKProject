@@ -66,6 +66,18 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
+        android:id="@+id/button_setting"
+        android:layout_width="24dp"
+        android:layout_height="20dp"
+        android:background="@null"
+        android:drawableStart="@drawable/button_setting"
+        android:layout_marginEnd="5dp"
+
+        app:layout_constraintBottom_toBottomOf="@+id/text_info"
+        app:layout_constraintEnd_toEndOf="@+id/text_info"
+        app:layout_constraintTop_toTopOf="@+id/text_info" />
+
+    <Button
         android:id="@+id/button_change"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
@@ -96,7 +108,7 @@
         android:background="@drawable/button_border"
         android:progressTint="@android:color/white"
         android:thumbTint="@android:color/white"
-        android:max="70"
+        android:max="150"
         android:progress="20"
 
         app:layout_constraintBottom_toBottomOf="parent"

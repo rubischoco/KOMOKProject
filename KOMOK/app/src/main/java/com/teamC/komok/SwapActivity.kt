@@ -11,12 +11,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
-import com.google.firebase.auth.FirebaseAuth
+import com.bumptech.glide.Glide
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import com.teamC.komok.utils.DrawUtils
+import com.teamC.komok.utils.ImageUtils
 import kotlinx.android.synthetic.main.activity_swap.*
 
 class SwapActivity : AppCompatActivity() {
@@ -30,7 +32,7 @@ class SwapActivity : AppCompatActivity() {
     private lateinit var savedBitmap: Bitmap
     private lateinit var watermarkBitmap: Bitmap
     private lateinit var savedFaces: MutableList<Face>
-    private lateinit var firebaseAuth: FirebaseAuth
+//    private lateinit var firebaseAuth: FirebaseAuth
 
     companion object {
         const val CAMERA_CODE = 100
@@ -40,7 +42,7 @@ class SwapActivity : AppCompatActivity() {
     init {
         val detectOptions = FaceDetectorOptions.Builder()
             .setClassificationMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
-            .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+            //.setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
             .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
             //.setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
             .setMinFaceSize(1f)
@@ -49,51 +51,57 @@ class SwapActivity : AppCompatActivity() {
         detector = FaceDetection.getClient(detectOptions)
     }
 
-    override fun onStart() {
-        super.onStart()
-        if (firebaseAuth.currentUser != null){
-            firebaseAuth.currentUser?.reload()
-        }
-    }
+//    override fun onStart() {
+//        super.onStart()
+//        if (firebaseAuth.currentUser != null){
+//            firebaseAuth.currentUser?.reload()
+//        }
+//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_swap)
 
-        firebaseAuth = FirebaseAuth.getInstance()
-        val user = firebaseAuth.currentUser
+//        firebaseAuth = FirebaseAuth.getInstance()
+//        val user = firebaseAuth.currentUser
 
         val watermarkOn = ContextCompat.getDrawable(this, R.drawable.button_watermark_on)
         val watermarkOff = ContextCompat.getDrawable(this, R.drawable.button_watermark_off)
         watermarkBitmap = ContextCompat.getDrawable(this, R.drawable.komok_splash)?.toBitmap()!!
 
         imageUpload = Uri.parse(intent.getStringExtra("imageUpload"))
-
-        image_preview.setImageURI(imageUpload)
+        Glide.with(this)
+            .load(imageUpload)
+            .into(image_preview)
         detectFaces(imageUpload)
 
         button_back.setOnClickListener { finish() }
 
         button_watermark.setOnClickListener {
-            if (user != null) {
-                if (user.isEmailVerified) {
-                    if (button_watermark.alpha == 1f) {
-                        watermark = !watermark
-                        image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
-                        button_watermark.setCompoundDrawablesWithIntrinsicBounds(
-                            if (watermark) watermarkOn else watermarkOff,
-                            null,
-                            null,
-                            null
-                        )
-                    }
-                } else {
-                    Toast.makeText(this, "Verify your email first", Toast.LENGTH_SHORT).show()
-                }
+            if (button_watermark.alpha == 1f) {
+                watermark = !watermark
+                Glide.with(this)
+                    .load(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                    .into(image_preview)
+                button_watermark.setCompoundDrawablesWithIntrinsicBounds(
+                    if (watermark) watermarkOn else watermarkOff,
+                    null,
+                    null,
+                    null
+                )
             }
+//            if (user != null) {
+//                if (user.isEmailVerified) {
+//                    // WATERMARK CODE
+//                } else {
+//                    Toast.makeText(this, "Verify your email first", Toast.LENGTH_SHORT).show()
+//                }
+//            }
         }
 
         button_help.setOnClickListener {
-            Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, HelpActivity::class.java)
+            intent.putExtra("helpFragment", 0)
+            startActivity(intent)
         }
 
         button_change.setOnClickListener {
@@ -104,7 +112,9 @@ class SwapActivity : AppCompatActivity() {
             if (button_duplicate.alpha == 1f) {
                 if (randPos >= savedFaces.size-1) {randPos=0} else {randPos+=1}
                 savedBitmap = drawUtils.swapFaces(bitmap, savedFaces, randPos, true)
-                image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                Glide.with(this)
+                    .load(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                    .into(image_preview)
                 toggleButton(true, 2)
             } else {
                 Toast.makeText(this, "Not enough face data", Toast.LENGTH_SHORT).show()
@@ -115,7 +125,9 @@ class SwapActivity : AppCompatActivity() {
             if (button_swap.alpha == 1f) {
                 if (randPos+1 >= savedFaces.size-1) {randPos=0} else {randPos+=1}
                 savedBitmap = drawUtils.swapFaces(bitmap, savedFaces, randPos)
-                image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                Glide.with(this)
+                    .load(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
+                    .into(image_preview)
                 toggleButton(true, 2)
             } else {
                 Toast.makeText(this, "Not enough face data", Toast.LENGTH_SHORT).show()
@@ -154,7 +166,9 @@ class SwapActivity : AppCompatActivity() {
     }
     private fun loadImage(data: String?) {
         imageUpload = Uri.parse(data)
-        image_preview.setImageURI(imageUpload)
+        Glide.with(this)
+            .load(imageUpload)
+            .into(image_preview)
         detectFaces(imageUpload)
     }
 
