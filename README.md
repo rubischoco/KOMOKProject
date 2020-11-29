@@ -15,4 +15,4 @@
 | Saya bisa melakukan swap face dengan gambar yang sudah tersedia dari aplikasi | [Membuat web service](https://github.com/rubischoco/KOMOKProject/issues/25)| Completed | Ari |
 | Saya bisa melakukan swap face dengan gambar yang sudah tersedia dari aplikasi | [Membuat integrasi dari database ke aplikasi](https://github.com/rubischoco/KOMOKProject/issues/26)| In Progress | Ari |
 | Saya bisa memilih wajah mana saja pada gambar yang akan diolah | [Membuat sistem pemilihan wajah](https://github.com/rubischoco/KOMOKProject/issues/27)| Completed | Riza |
-| Saya bisa melakukan mix face | [Membuat sistem mix face](https://github.com/rubischoco/KOMOKProject/issues/28)| To Do | In Progress |
+| Saya bisa melakukan mix face | [Membuat sistem mix face](https://github.com/rubischoco/KOMOKProject/issues/28)| In Progress | Riza |
