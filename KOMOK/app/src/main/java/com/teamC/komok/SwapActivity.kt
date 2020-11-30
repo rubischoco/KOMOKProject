@@ -190,7 +190,7 @@ class SwapActivity : AppCompatActivity() {
                             savedFaces = drawUtils.checkFacePoint(bitmap, newFaces)
 
                             if (savedFaces.isNotEmpty()) {
-                                text_info.text = "[${savedFaces.size} FACE SCANNED]"
+                                text_info.text = "[${savedFaces.size} FACE]"
                                 savedBitmap = drawUtils.drawContourFaces(bitmap, savedFaces)
                                 image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
 

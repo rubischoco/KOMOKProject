@@ -15,14 +15,20 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.teamC.komok.retrofit.GalleryResponse
+import com.teamC.komok.retrofit.RetrofitClient
 import com.teamC.komok.utils.ImageUtils
 import com.teamC.komok.utils.PermissionUtils
 import kotlinx.android.synthetic.main.activity_home.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class HomeActivity : AppCompatActivity() {
     private val permissionUtils = PermissionUtils()
     private val imageUtils = ImageUtils()
+    private var test: String = "Still Getting Data"
     private lateinit var handler: Handler
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -55,6 +61,25 @@ class HomeActivity : AppCompatActivity() {
         handler = Handler()
         // untuk login akun
         firebaseAuth = FirebaseAuth.getInstance()
+
+        RetrofitClient.api.getGallery().enqueue(object: Callback<List<GalleryResponse>> {
+            override fun onResponse(
+                call: Call<List<GalleryResponse>>,
+                response: Response<List<GalleryResponse>>
+            ) {
+                val res = response.body()
+                if (res != null) {
+                    test = ""
+                    for (data in res) {
+                        test += "[id=${data.id}, name=${data.name}, link=${data.link}, type=${data.type}]\n"
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<GalleryResponse>>, t: Throwable) {
+                test = t.message.toString()
+            }
+        })
 
         // tombol akun
         button_user.setOnClickListener {
@@ -124,6 +149,10 @@ class HomeActivity : AppCompatActivity() {
         button_about.setOnClickListener {
             val intent = Intent(this, AboutActivity::class.java)
             startActivity(intent)
+        }
+        
+        button_tes.setOnClickListener {
+            Toast.makeText(this, test, Toast.LENGTH_SHORT).show()
         }
     }
 
