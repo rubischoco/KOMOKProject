@@ -20,6 +20,7 @@
 
     <Button
         android:id="@+id/button_back"
+        android:contentDescription="@string/desc_button_back"
         android:layout_width="38dp"
         android:layout_height="0dp"
         android:background="@null"
@@ -31,6 +32,7 @@
 
     <Button
         android:id="@+id/button_help"
+        android:contentDescription="@string/desc_button_help"
         android:layout_width="38dp"
         android:layout_height="0dp"
         android:background="@null"
@@ -67,11 +69,12 @@
 
     <Button
         android:id="@+id/button_setting"
+        android:contentDescription="@string/desc_button_setting"
         android:layout_width="24dp"
         android:layout_height="20dp"
+        android:layout_marginEnd="5dp"
         android:background="@null"
         android:drawableStart="@drawable/button_setting"
-        android:layout_marginEnd="5dp"
 
         app:layout_constraintBottom_toBottomOf="@+id/text_info"
         app:layout_constraintEnd_toEndOf="@+id/text_info"
@@ -79,6 +82,7 @@
 
     <Button
         android:id="@+id/button_change"
+        android:contentDescription="@string/desc_button_change"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_border"
@@ -91,6 +95,7 @@
 
     <Button
         android:id="@+id/button_shape"
+        android:contentDescription="@string/desc_button_shape"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_border"
@@ -118,6 +123,7 @@
 
     <Button
         android:id="@+id/button_save"
+        android:contentDescription="@string/desc_button_save"
         android:layout_width="64dp"
         android:layout_height="wrap_content"
         android:background="@drawable/button_border"

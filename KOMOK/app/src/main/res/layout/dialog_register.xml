@@ -25,6 +25,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_email"
+            android:contentDescription="@string/text_email"
             app:hintTextColor="@android:color/black"
             android:textColorHint="@android:color/black"
             android:layout_width="match_parent"
@@ -46,6 +47,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_password1"
+            android:contentDescription="@string/text_password"
             app:hintTextColor="@android:color/black"
             app:passwordToggleEnabled="true"
             android:textColorHint="@android:color/black"
@@ -68,6 +70,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/layout_password2"
+            android:contentDescription="@string/text_confirm"
             app:hintTextColor="@android:color/black"
             app:passwordToggleEnabled="true"
             android:textColorHint="@android:color/black"

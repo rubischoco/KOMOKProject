@@ -62,7 +62,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="[A]"
+                    android:text="@string/A"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
@@ -89,7 +89,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="[B]"
+                    android:text="@string/B"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
@@ -127,7 +127,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="[C]"
+                    android:text="@string/C"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
@@ -140,6 +140,45 @@
 
                     <Button
                         android:id="@+id/viewC"
+                        android:layout_width="64dp"
+                        android:layout_height="wrap_content"
+
+                        android:background="@drawable/dialog_background_gray"
+                        android:drawableStart="@drawable/button_setting"
+                        android:paddingStart="20dp"
+                        android:paddingEnd="0dp"
+
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textD"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.2"
+                    android:text="@string/D"
+                    android:textAlignment="center"
+                    android:textColor="@android:color/black"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <Button
+                        android:id="@+id/viewD"
                         android:layout_width="128dp"
                         android:layout_height="wrap_content"
 
@@ -160,11 +199,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textD"
+                    android:id="@+id/textE"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="[D]"
+                    android:text="@string/E"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
@@ -176,7 +215,7 @@
                     android:layout_weight="1">
 
                     <Button
-                        android:id="@+id/viewD"
+                        android:id="@+id/viewE"
                         android:layout_width="64dp"
                         android:layout_height="wrap_content"
 
@@ -197,11 +236,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textE"
+                    android:id="@+id/textF"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="[E]"
+                    android:text="@string/F"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
@@ -213,7 +252,7 @@
                     android:layout_weight="1">
 
                     <Button
-                        android:id="@+id/viewE1"
+                        android:id="@+id/viewF1"
                         android:layout_width="64dp"
                         android:layout_height="wrap_content"
 
@@ -227,7 +266,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <Button
-                        android:id="@+id/viewE2"
+                        android:id="@+id/viewF2"
                         android:layout_width="64dp"
                         android:layout_height="wrap_content"
 
@@ -238,7 +277,7 @@
                         android:paddingStart="16dp"
                         android:paddingEnd="0dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toEndOf="@+id/viewE1"
+                        app:layout_constraintStart_toEndOf="@+id/viewF1"
                         app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </LinearLayout>
@@ -250,11 +289,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textF"
+                    android:id="@+id/textG"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="[F]"
+                    android:text="@string/G"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
@@ -266,7 +305,7 @@
                     android:layout_weight="1">
 
                     <Button
-                        android:id="@+id/viewF"
+                        android:id="@+id/viewG"
                         android:layout_width="64dp"
                         android:layout_height="wrap_content"
 
@@ -288,11 +327,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textG"
+                    android:id="@+id/textH"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.2"
-                    android:text="[G]"
+                    android:text="@string/H"
                     android:textAlignment="center"
                     android:textColor="@android:color/black"
                     android:textSize="20sp"
@@ -304,7 +343,7 @@
                     android:layout_weight="1">
 
                     <Button
-                        android:id="@+id/viewG"
+                        android:id="@+id/viewH"
                         android:layout_width="64dp"
                         android:layout_height="wrap_content"
 

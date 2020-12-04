@@ -12,23 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.google.mlkit.vision.face.Face
+import com.teamC.komok.MixActivity
 import com.teamC.komok.R
 import com.teamC.komok.retrofit.GalleryResponse
-import com.teamC.komok.utils.DrawUtils
 
 class MixFaceAdapter2(
     val context: Context,
-    private val bitmap: Bitmap,
-    private val faces: MutableList<Face>,
-    private val select: MutableList<Int>,
-    private val apiGallery: MutableList<GalleryResponse>,
-    private val mixList: MutableList<Pair<Face, Int>>,
-    private val imagePreview: ImageView
+    private val facePos: Int,
+    private val apiGallery: MutableList<GalleryResponse>
     ): RecyclerView.Adapter<MixFaceAdapter2.ViewHolder>() {
-
-    private val drawUtils = DrawUtils()
-    private val apiBitmap: MutableList<Bitmap> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(context)
@@ -46,21 +38,15 @@ class MixFaceAdapter2(
                         transition: Transition<in Bitmap>?
                     ) {
                         holder.imageMix.setImageBitmap(resource)
-//                        apiBitmap.add(position, resource)
+                        holder.bitmapMix = resource
                     }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
+                    override fun onLoadCleared(placeholder: Drawable?) {
+                    }
                 })
         }
 
         holder.cardMix.setOnClickListener {
-//            Toast.makeText(context, apiBitmap.toString(), Toast.LENGTH_SHORT).show()
-//            val face = drawUtils.getSelectedFaces(faces, select)
-//            mixList.add(Pair(face[0], apiBitmap[position]))
-//            val bmp = drawUtils.drawMixFace(context, bitmap, mixList)
-//            Glide.with(context)
-//                .load(bmp)
-//                .into(imagePreview)
+            holder.bitmapMix?.let { it1 -> (context as MixActivity).mixFace2(facePos, it1) }
         }
     }
 
@@ -71,5 +57,6 @@ class MixFaceAdapter2(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val cardMix: CardView = itemView.findViewById(R.id.card_mix)
         val imageMix: ImageView = itemView.findViewById(R.id.image_mix)
+        var bitmapMix: Bitmap? = null
     }
 }

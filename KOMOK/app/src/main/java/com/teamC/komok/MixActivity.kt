@@ -11,6 +11,7 @@ import android.view.View
 import android.view.WindowManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -40,8 +41,7 @@ class MixActivity : AppCompatActivity() {
     private lateinit var bitmap: Bitmap
     private lateinit var imageUpload: Uri
     private lateinit var savedFaces: MutableList<Face>
-    private lateinit var selectFaces: MutableList<Int>
-    private lateinit var mixList: MutableList<Pair<Face, Int>>
+    private lateinit var mixList: MutableList<Pair<Face, Bitmap>>
 
     companion object {
         const val CAMERA_CODE = 100
@@ -100,7 +100,7 @@ class MixActivity : AppCompatActivity() {
         // tombol untuk lihat list bagian tambahan
         button_list.setOnClickListener {
             if (button_list.alpha == 1f) {
-                //Toast.makeText(this, apiGallery.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Coming soon", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -114,7 +114,7 @@ class MixActivity : AppCompatActivity() {
         // tombol untuk share gambar
         button_share.setOnClickListener {
             if (button_share.alpha == 1f && mixList.size > 0) {
-                imageUtils.shareImage(this, drawUtils.drawMixFace(this, bitmap, mixList))
+                imageUtils.shareImage(this, drawUtils.drawMixFace(bitmap, mixList))
             }
         }
     }
@@ -152,7 +152,6 @@ class MixActivity : AppCompatActivity() {
         bitmap = imageUtils.getBitmapFromContentUri(contentResolver, uri)
         // kosongkan data wajah dan perbarui teks info
         savedFaces = mutableListOf()
-        selectFaces = mutableListOf()
         mixList = mutableListOf()
         text_info.text = "[DETECTING FACE]"
 
@@ -164,7 +163,6 @@ class MixActivity : AppCompatActivity() {
                 if (faces.isNotEmpty()) {
                     // perbarui data wajah dan teks info
                     savedFaces = faces
-                    selectFaces = MutableList(savedFaces.size) {0}
                     text_info.text = "[${savedFaces.size} FACE]"
                     // tampilkan gambar dengan wajah yang terdeteksi
                     Glide.with(this)
@@ -180,6 +178,24 @@ class MixActivity : AppCompatActivity() {
             .addOnFailureListener { e -> text_info.text = "[ $e ]" }
     }
 
+    // dialog menyimpan gambar
+    private fun saveDialog() {
+        // setup the alert builder
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
+        builder.setTitle("Save Image")
+        builder.setMessage("Are you sure you want to save the mix image result?")
+        // add the buttons
+        builder.setPositiveButton("Yes") { _, _ ->
+            val bmp = drawUtils.drawMixFace(bitmap, mixList)
+            imageUtils.saveImage(this, bmp)
+            Toast.makeText(this, "Success saved mixed face!", Toast.LENGTH_SHORT).show()
+        }
+        builder.setNegativeButton("No", null)
+        // create and show the alert dialog
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
     // dialog untuk memilih wajah
     @SuppressLint("SetTextI18n")
     private fun mixFaceDialog1() {
@@ -193,48 +209,45 @@ class MixActivity : AppCompatActivity() {
         val buttonClose = customDialog.findViewById<Button>(R.id.button_close)
         val recyclerFace = customDialog.findViewById<RecyclerView>(R.id.recycler_face)
         val mixLayout = customDialog.findViewById<LinearLayout>(R.id.mix_layout)
-        val imageSelect = customDialog.findViewById<ImageView>(R.id.image_select)
+        val cardSelect = customDialog.findViewById<CardView>(R.id.card_select)
         val spinnerMix = customDialog.findViewById<Spinner>(R.id.spinner_mix)
-        val recyclerMix = customDialog.findViewById<RecyclerView>(R.id.recycler_mix)
+        //val recyclerMix = customDialog.findViewById<RecyclerView>(R.id.recycler_mix)
         // setting untuk recyclerview (pilih wajah)
-        val mixFaceAdapter1 = MixFaceAdapter1(this, bitmap, savedFaces, selectFaces, recyclerFace, mixLayout)
+        val mixFaceAdapter1 = MixFaceAdapter1(this, bitmap, savedFaces, recyclerFace, mixLayout)
         recyclerFace?.adapter = mixFaceAdapter1
         recyclerFace?.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
-        // setting untuk recyclerview (pilih bagian tambahan)
-        val mixFaceAdapter2 = MixFaceAdapter2(this, bitmap, savedFaces, selectFaces, apiGallery, mixList, image_preview)
-        recyclerMix?.adapter = mixFaceAdapter2
-        recyclerMix?.layoutManager = GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false)
         // list sementara untuk bagian tambahan
         val items = arrayOf("Face", "Eyes", "Ears", "Nose", "Mouth")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, items)
         spinnerMix?.adapter = adapter
         // tombol tutup dialog
-        buttonClose?.setOnClickListener {
-            customDialog.dismiss()
-        }
+        buttonClose?.setOnClickListener { customDialog.dismiss() }
         // tombol pilih ulang wajah
-        imageSelect?.setOnClickListener {
+        cardSelect?.setOnClickListener {
+            // balik ke recycler 1
             recyclerFace?.visibility = View.VISIBLE
             mixLayout?.visibility = View.GONE
         }
     }
-
-    // dialog menyimpan gambar
-    private fun saveDialog() {
-        // setup the alert builder
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setTitle("Save Image")
-        builder.setMessage("Are you sure you want to save the mix image result?")
-        // add the buttons
-        builder.setPositiveButton("Yes") { _, _ ->
-            val bmp = drawUtils.drawMixFace(this, bitmap, mixList)
-            imageUtils.saveImage(this, bmp)
-            Toast.makeText(this, "Success saved mixed face!", Toast.LENGTH_SHORT).show()
-        }
-        builder.setNegativeButton("No", null)
-        // create and show the alert dialog
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
+    fun mixFace1(layoutSelect: LinearLayout, facePos: Int) {
+        // set gambar wajah yang terpilih untuk di mix
+        Glide.with(this)
+            .load(drawUtils.cropShapeFaces(bitmap, savedFaces[facePos]))
+            .into(layoutSelect.findViewById(R.id.image_select))
+        // adapter untuk recyclerview (pilih mix yang ingin ditambahkan)
+        val recyclerMix = layoutSelect.findViewById<RecyclerView>(R.id.recycler_mix)
+        val mixFaceAdapter2 = MixFaceAdapter2(this, facePos, apiGallery)
+        recyclerMix?.adapter = mixFaceAdapter2
+        recyclerMix?.layoutManager = GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false)
+        // tampilkan layout
+        layoutSelect.visibility = View.VISIBLE
+    }
+    fun mixFace2(facePos: Int, bitmapMix: Bitmap) {
+        mixList.add(Pair(savedFaces[facePos], bitmapMix))
+        val bmp = drawUtils.drawMixFace(bitmap, mixList)
+        Glide.with(this)
+            .load(bmp)
+            .into(image_preview)
     }
 
     // merubah kondisi beberapa tombol

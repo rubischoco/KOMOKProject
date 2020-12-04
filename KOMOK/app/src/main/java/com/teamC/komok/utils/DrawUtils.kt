@@ -1,6 +1,5 @@
 package com.teamC.komok.utils
 
-import android.content.Context
 import android.graphics.*
 import com.google.mlkit.vision.face.Face
 import kotlin.math.ceil
@@ -281,10 +280,8 @@ class DrawUtils {
                 //tempCanvas.drawCircle(n.exactCenterX(), n.exactCenterY(), n.width()/2f, strokeLine)
             }
         }
-
         strokeLine.color = Color.GREEN
         strokeLine.strokeWidth = 5f
-
         return tempBitmap
     }
 
@@ -294,9 +291,8 @@ class DrawUtils {
         faces: MutableList<Face>,
         color: Int = Color.GREEN
     ): Bitmap {
-        if (color != Color.GREEN) {
-            strokeLine.color = color
-        }
+        if (color != Color.GREEN) { strokeLine.color = color }
+        if (bitmap.width >= 5000 || bitmap.height >= 5000) { strokeLine.strokeWidth = 10f }
         // buat bitmap kosong dengan ukuran sesuai bitmap pilihan
         val tempBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val tempCanvas = Canvas(tempBitmap)
@@ -319,22 +315,23 @@ class DrawUtils {
                 }
             }*/
         }
-        if (color != Color.GREEN) {
-            strokeLine.color = Color.GREEN
-        }
+        strokeLine.color = Color.GREEN
+        strokeLine.strokeWidth = 5f
         return tempBitmap
     }
 
-    fun drawMixFace(context: Context, bitmap: Bitmap, mixFace: MutableList<Pair<Face, Int>>): Bitmap {
-        val res = context.resources
+    fun drawMixFace(bitmap: Bitmap, mixFace: MutableList<Pair<Face, Bitmap>>): Bitmap {
         val tempBitmap = Bitmap.createBitmap(bitmap.width, bitmap.height, Bitmap.Config.ARGB_8888)
         val tempCanvas = Canvas(tempBitmap)
         tempCanvas.drawBitmap(bitmap, 0f, 0f, null)
 
         for (mix in mixFace) {
-            val bmp = BitmapFactory.decodeResource(res, mix.second).copy(Bitmap.Config.ARGB_8888, true)
-
-            tempCanvas.drawBitmap(bmp, null, mix.first.boundingBox, null)
+            val face = mix.first
+            val faceBox = face.boundingBox
+            val bmp = mix.second
+            //val bmp = Bitmap.createScaledBitmap(mix.second, faceBox.width(), faceBox.height(), false)
+            //val bmp = BitmapFactory.decodeResource(res, mix.second).copy(Bitmap.Config.ARGB_8888, true)
+            tempCanvas.drawBitmap(bmp, null, faceBox, null)
             // 0 - bawah mulut
             // 1 - pipi kanan
             // 2 - telinga kanan

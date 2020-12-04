@@ -223,9 +223,7 @@ class CropActivity : AppCompatActivity() {
         val customDialog = BottomSheetDialog(this).apply {
             window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             setContentView(R.layout.botdialog_face_select)
-            setOnDismissListener {
-                toggleDialog(false)
-            }
+            setOnDismissListener { toggleDialog(false) }
         }
         customDialog.show()
         // ambil referensi view dari dialog
@@ -239,9 +237,7 @@ class CropActivity : AppCompatActivity() {
         // ganti text dialog
         textDialog?.text = "[${savedFaces.size} FACE] [${selectFaces.sum()} SELECTED]"
         // tombol tutup dialog
-        buttonClose?.setOnClickListener {
-            customDialog.dismiss()
-        }
+        buttonClose?.setOnClickListener { customDialog.dismiss() }
     }
     // fungsi tergantung kondisi dialog
     @SuppressLint("SetTextI18n")

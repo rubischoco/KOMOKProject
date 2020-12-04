@@ -19,17 +19,19 @@
 
     <Button
         android:id="@+id/button_back"
+        android:contentDescription="@string/desc_button_back"
         android:layout_width="38dp"
         android:layout_height="0dp"
         android:background="@null"
-
         android:drawableEnd="@drawable/button_back"
+
         app:layout_constraintBottom_toBottomOf="@+id/text_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/button_email"
+        android:contentDescription="@string/desc_button_email"
         android:layout_width="38dp"
         android:layout_height="0dp"
         android:background="@null"

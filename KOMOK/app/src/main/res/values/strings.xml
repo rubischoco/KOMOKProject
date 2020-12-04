@@ -41,17 +41,38 @@
     <string name="button_duplicate">Duplicate</string>
     <string name="button_swap">Swap</string>
     <string name="button_list">Mix List</string>
+    <string name="button_edit">Swap Setting</string>
+
+    <string name="desc_button_back">Button Back</string>
+    <string name="desc_button_watermark">Button Watermark</string>
+    <string name="desc_button_help">Button Help</string>
+    <string name="desc_button_setting">Button Face Detector Setting</string>
+    <string name="desc_button_change">Button Change Image</string>
+    <string name="desc_button_save">Button Save Image Result</string>
+    <string name="desc_button_share">Button Share Image Result</string>
+    <string name="desc_button_shape">Button Change Crop Shape</string>
+    <string name="desc_button_email">Button Send Email to KOMOK</string>
+
+    <string name="A">[A]</string>
+    <string name="B">[B]</string>
+    <string name="C">[C]</string>
+    <string name="D">[D]</string>
+    <string name="E">[E]</string>
+    <string name="F">[F]</string>
+    <string name="G">[G]</string>
+    <string name="H">[H]</string>
 
     <string name="help_swap"><b>Swap Face</b> is a feature that can swap detected faces* in an image automatically.\n
     *Face detector in Swap Face is set to the highest, so it will only detect faces that met some requirements\n\n
-    <b>Step to Swap Face</b> (1-6) :\n
+    <b>Step to Swap Face</b> (1-7) :\n
     1) Select an image with faces in it\n
     2) KOMOK will detect faces in the image, the detection information can be seen in <b>[A]</b>\n
     3) - If no face is found, you need to replace the image with another image by using the <b>[B]</b> button\n
        - If found at least two faces, you will be able to duplicate faces and swap faces\n
-    4) Press button <b>[C]</b> to duplicate or button <b>[D]</b> to swap, you can press repeatedly to adjust face swap\n
-    5) Press button <b>[E]</b> to remove or add watermark to the image\n
-    6) Now, you can save the swap results with button <b>[F]</b> or share the swap results with button <b>[G]</b>
+    4) Press button <b>[C]</b> to open options, to select which faces you do not want to crop or vice versa\n
+    5) Press button <b>[D]</b> to duplicate or button <b>[E]</b> to swap\n
+    6) Press button <b>[F]</b> to remove or add watermark to the image\n
+    7) Now, you can save the swap results with button <b>[G]</b> or share it with button <b>[H]</b>
     </string>
 
     <string name="help_crop"><b>Crop Face</b> is a feature that can crop faces in an image automatically.\n\n
@@ -66,8 +87,19 @@
     7) Now, you can save the crop results with button <b>[F]</b>
     </string>
 
+    <string name="help_mix"><b>Mix Face</b> is a feature that can add some stickers to faces in image.\n\n
+    <b>Step to Mix Face</b> (1-6) :\n
+    1) Select an image with faces in it\n
+    2) KOMOK will detect faces in the image, the detection information can be seen in <b>[A]</b>\n
+    3) - If no face is found, you need to replace the image with another image by using the <b>[B]</b> button\n
+       - If found at least one face, you will be able to mix faces\n
+    4) Press button <b>[C]</b> to add sticker to face in image\n
+    5) Press button <b>[D]</b> to adjust the added stickers\n
+    6) Now, you can save the mix results with button <b>[E]</b> or share it with button <b>[F]</b>
+    </string>
+
     <string name="about">
-        Version 1.0
+        Version 1.2
         \n
         \nDeveloped by Team C
         \nMobile Computing UNJ

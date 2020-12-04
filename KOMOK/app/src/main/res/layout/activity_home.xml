@@ -56,6 +56,19 @@
         app:layout_constraintTop_toBottomOf="@+id/button_user" />
 
     <Button
+        android:id="@+id/button_mix"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/button_space"
+        android:background="@drawable/dialog_background_gray"
+        android:text="@string/button_mixface"
+        android:textColor="@android:color/white"
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_crop" />
+
+    <Button
         android:id="@+id/button_help"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
@@ -65,7 +78,7 @@
 
         android:textColor="@android:color/white"
         app:layout_constraintStart_toStartOf="@+id/button_swap"
-        app:layout_constraintTop_toBottomOf="@+id/button_swap" />
+        app:layout_constraintTop_toBottomOf="@+id/button_mix" />
 
     <Button
         android:id="@+id/button_about"
@@ -77,19 +90,6 @@
         android:textColor="@android:color/white"
 
         app:layout_constraintEnd_toEndOf="@+id/button_crop"
-        app:layout_constraintTop_toBottomOf="@+id/button_crop" />
-
-    <Button
-        android:id="@+id/button_mix"
-        android:layout_width="@dimen/button_width"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/button_space"
-        android:background="@drawable/dialog_background_gray"
-        android:text="@string/button_mixface"
-        android:textColor="@android:color/white"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_about" />
+        app:layout_constraintTop_toBottomOf="@+id/button_mix" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
