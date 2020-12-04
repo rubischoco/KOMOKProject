@@ -17,19 +17,31 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
+        app:layout_constraintVertical_bias="0.18" />
 
     <Button
-        android:id="@+id/button_swap"
-        android:layout_width="@dimen/button_width"
+        android:id="@+id/button_user"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_border"
-        android:text="@string/button_swapface"
+        android:background="@drawable/dialog_background_gray"
+        android:text="@string/button_login"
         android:textColor="@android:color/white"
 
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_logo" />
+
+    <Button
+        android:id="@+id/button_swap"
+        android:layout_width="@dimen/button_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/button_space"
+        android:background="@drawable/button_border"
+        android:text="@string/button_swapface"
+        android:textColor="@android:color/white"
+
+        app:layout_constraintStart_toStartOf="@+id/button_user"
+        app:layout_constraintTop_toBottomOf="@+id/button_user" />
 
     <Button
         android:id="@+id/button_crop"
@@ -40,35 +52,20 @@
         android:text="@string/button_cropface"
         android:textColor="@android:color/white"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_swap" />
+        app:layout_constraintEnd_toEndOf="@+id/button_user"
+        app:layout_constraintTop_toBottomOf="@+id/button_user" />
 
     <Button
-        android:id="@+id/button_mix"
+        android:id="@+id/button_help"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/button_space"
-        android:background="@drawable/dialog_background_gray"
-        android:text="@string/button_mixface"
+        android:background="@drawable/button_border"
+        android:text="@string/button_help"
+
         android:textColor="@android:color/white"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_crop" />
-
-    <Button
-        android:id="@+id/button_user"
-        android:layout_width="36dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:background="@drawable/dialog_background_gray"
-        android:drawableStart="@drawable/button_user"
-        android:paddingStart="6dp"
-        android:paddingEnd="0dp"
-
-        app:layout_constraintStart_toEndOf="@id/button_mix"
-        app:layout_constraintTop_toTopOf="@id/button_mix" />
+        app:layout_constraintStart_toStartOf="@+id/button_swap"
+        app:layout_constraintTop_toBottomOf="@+id/button_swap" />
 
     <Button
         android:id="@+id/button_about"
@@ -79,17 +76,16 @@
         android:text="@string/button_about"
         android:textColor="@android:color/white"
 
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_mix" />
+        app:layout_constraintEnd_toEndOf="@+id/button_crop"
+        app:layout_constraintTop_toBottomOf="@+id/button_crop" />
 
     <Button
-        android:id="@+id/button_tes"
+        android:id="@+id/button_mix"
         android:layout_width="@dimen/button_width"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/button_space"
-        android:background="@drawable/button_border"
-        android:text="API TEST"
+        android:background="@drawable/dialog_background_gray"
+        android:text="@string/button_mixface"
         android:textColor="@android:color/white"
 
         app:layout_constraintEnd_toEndOf="parent"

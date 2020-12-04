@@ -22,15 +22,21 @@ import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
 import com.teamC.komok.adapter.MixFaceAdapter1
 import com.teamC.komok.adapter.MixFaceAdapter2
+import com.teamC.komok.retrofit.GalleryResponse
+import com.teamC.komok.retrofit.RetrofitClient
 import com.teamC.komok.utils.DrawUtils
 import com.teamC.komok.utils.ImageUtils
 import kotlinx.android.synthetic.main.activity_mix.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class MixActivity : AppCompatActivity() {
     private val imageUtils = ImageUtils()
     private val drawUtils = DrawUtils()
     private val detector: FaceDetector
+    private var apiGallery: MutableList<GalleryResponse> = mutableListOf()
     private lateinit var bitmap: Bitmap
     private lateinit var imageUpload: Uri
     private lateinit var savedFaces: MutableList<Face>
@@ -54,6 +60,17 @@ class MixActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mix)
+
+        RetrofitClient.api.getGallery().enqueue(object: Callback<List<GalleryResponse>> {
+            override fun onResponse(
+                call: Call<List<GalleryResponse>>,
+                response: Response<List<GalleryResponse>>
+            ) {
+                apiGallery = response.body() as MutableList<GalleryResponse>
+            }
+
+            override fun onFailure(call: Call<List<GalleryResponse>>, t: Throwable) {}
+        })
 
         // tampilkan gambar dari intent sebelumnya dan deteksi wajah
         loadImage(intent.getStringExtra("imageUpload"))
@@ -83,7 +100,7 @@ class MixActivity : AppCompatActivity() {
         // tombol untuk lihat list bagian tambahan
         button_list.setOnClickListener {
             if (button_list.alpha == 1f) {
-                //TODO()
+                //Toast.makeText(this, apiGallery.toString(), Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -184,7 +201,7 @@ class MixActivity : AppCompatActivity() {
         recyclerFace?.adapter = mixFaceAdapter1
         recyclerFace?.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
         // setting untuk recyclerview (pilih bagian tambahan)
-        val mixFaceAdapter2 = MixFaceAdapter2(this, bitmap, savedFaces, selectFaces, mixList, image_preview)
+        val mixFaceAdapter2 = MixFaceAdapter2(this, bitmap, savedFaces, selectFaces, apiGallery, mixList, image_preview)
         recyclerMix?.adapter = mixFaceAdapter2
         recyclerMix?.layoutManager = GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false)
         // list sementara untuk bagian tambahan

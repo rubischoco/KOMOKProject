@@ -24,7 +24,7 @@ import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
-import com.teamC.komok.adapter.CropFaceAdapter
+import com.teamC.komok.adapter.ChooseFaceAdapter
 import com.teamC.komok.utils.DrawUtils
 import com.teamC.komok.utils.ImageUtils
 import kotlinx.android.synthetic.main.activity_crop.*
@@ -80,8 +80,6 @@ class CropActivity : AppCompatActivity() {
         button_setting.setOnClickListener {
             if (button_setting.alpha == 1f) {
                 chooseFaceDialog()
-            } else {
-                Toast.makeText(this, "No face data", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -122,8 +120,6 @@ class CropActivity : AppCompatActivity() {
         button_save.setOnClickListener {
             if (button_save.alpha == 1f) {
                 saveDialog()
-            } else {
-                Toast.makeText(this, "No face data", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -174,7 +170,7 @@ class CropActivity : AppCompatActivity() {
                 if (faces.isNotEmpty()) {
                     // perbarui data wajah dan teks info
                     savedFaces = faces
-                    newFaces = faces
+                    newFaces = savedFaces
                     selectFaces = MutableList(savedFaces.size) {1}
                     text_info.text = "[${savedFaces.size} FACE] [${selectFaces.sum()} SELECTED]"
                     // tampilkan gambar dengan wajah yang terdeteksi
@@ -237,7 +233,7 @@ class CropActivity : AppCompatActivity() {
         val buttonClose = customDialog.findViewById<Button>(R.id.button_close)
         val recyclerFace = customDialog.findViewById<RecyclerView>(R.id.recycler_face)
         // setting untuk recyclerview
-        val chooseFaceAdapter = CropFaceAdapter(this, bitmap, savedFaces, selectFaces, textDialog)
+        val chooseFaceAdapter = ChooseFaceAdapter(this, bitmap, savedFaces, selectFaces, textDialog)
         recyclerFace?.adapter = chooseFaceAdapter
         recyclerFace?.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
         // ganti text dialog

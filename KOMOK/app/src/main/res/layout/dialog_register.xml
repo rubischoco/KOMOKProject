@@ -29,18 +29,19 @@
             android:textColorHint="@android:color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/input_email"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:autofillHints="emailAddress"
                 android:ems="10"
-                android:maxLines="1"
-                android:textSize="14sp"
                 android:hint="@string/text_email"
                 android:inputType="textEmailAddress"
-                android:autofillHints="emailAddress"
+                android:maxLines="1"
                 android:paddingStart="5dp"
-                android:paddingEnd="5dp"/>
+                android:paddingEnd="5dp"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -50,18 +51,19 @@
             android:textColorHint="@android:color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/input_password1"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:autofillHints="password"
                 android:ems="10"
-                android:maxLines="1"
-                android:textSize="14sp"
                 android:hint="@string/text_password"
                 android:inputType="textPassword"
-                android:autofillHints="password"
+                android:maxLines="1"
                 android:paddingStart="5dp"
-                android:paddingEnd="5dp" />
+                android:paddingEnd="5dp"
+                android:textSize="14sp" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -71,18 +73,19 @@
             android:textColorHint="@android:color/black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <EditText
                 android:id="@+id/input_password2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
+                android:autofillHints="password"
                 android:ems="10"
-                android:maxLines="1"
-                android:textSize="14sp"
                 android:hint="@string/text_confirm"
                 android:inputType="textPassword"
-                android:autofillHints="password"
+                android:maxLines="1"
                 android:paddingStart="5dp"
-                android:paddingEnd="5dp" />
+                android:paddingEnd="5dp"
+                android:textSize="14sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

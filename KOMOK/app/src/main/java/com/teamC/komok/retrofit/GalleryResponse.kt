@@ -10,6 +10,4 @@ data class GalleryResponse(
     val link: String,
     @SerializedName("tipe")
     val type: Int
-//    val title: String,
-//    val body: String
 )

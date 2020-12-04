@@ -88,6 +88,7 @@ class DrawUtils {
                 tempCanvas.drawRect(face.boundingBox, fillBox)
             }
         }
+        tempCanvas.drawBitmap(bitmap, curFace.boundingBox, curFace.boundingBox, null)
         return tempBitmap
     }
 
@@ -344,6 +345,7 @@ class DrawUtils {
             // 7 - telinga kiri
             // 8 - mata kiri
             // 9 - ujung kiri bibir
+            //val point = face.alllandmarks[n]
             //tempCanvas.drawCircle(point.position.x, point.position.y, 4f, dot)
         }
         return tempBitmap

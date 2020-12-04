@@ -7,16 +7,23 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.view.WindowManager
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.mlkit.vision.common.InputImage
 import com.google.mlkit.vision.face.Face
 import com.google.mlkit.vision.face.FaceDetection
 import com.google.mlkit.vision.face.FaceDetector
 import com.google.mlkit.vision.face.FaceDetectorOptions
+import com.teamC.komok.adapter.ChooseFaceAdapter
 import com.teamC.komok.utils.DrawUtils
 import com.teamC.komok.utils.ImageUtils
 import kotlinx.android.synthetic.main.activity_swap.*
@@ -32,6 +39,8 @@ class SwapActivity : AppCompatActivity() {
     private lateinit var savedBitmap: Bitmap
     private lateinit var watermarkBitmap: Bitmap
     private lateinit var savedFaces: MutableList<Face>
+    private lateinit var newFaces: MutableList<Face>
+    private lateinit var selectFaces: MutableList<Int>
 //    private lateinit var firebaseAuth: FirebaseAuth
 
     companion object {
@@ -42,13 +51,16 @@ class SwapActivity : AppCompatActivity() {
     init {
         val detectOptions = FaceDetectorOptions.Builder()
             .setClassificationMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
-            //.setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
             .setContourMode(FaceDetectorOptions.CONTOUR_MODE_ALL)
-            //.setClassificationMode(FaceDetectorOptions.CLASSIFICATION_MODE_ALL)
             .setMinFaceSize(1f)
-            //.enableTracking()
             .build()
         detector = FaceDetection.getClient(detectOptions)
+//        val detectOptions2: FaceDetectorOptions = FaceDetectorOptions.Builder()
+//            .setClassificationMode(FaceDetectorOptions.PERFORMANCE_MODE_ACCURATE)
+//            .setLandmarkMode(FaceDetectorOptions.LANDMARK_MODE_ALL)
+//            .setMinFaceSize(0.1f)
+//            .build()
+//        detector2 = FaceDetection.getClient(detectOptions2)
     }
 
 //    override fun onStart() {
@@ -104,41 +116,42 @@ class SwapActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        button_setting.setOnClickListener {
+            if (button_setting.alpha == 1f) {
+                chooseFaceDialog()
+            }
+        }
+
         button_change.setOnClickListener {
             imageUtils.getImageDialog(this, CAMERA_CODE, GALLERY_CODE)
         }
 
         button_duplicate.setOnClickListener {
             if (button_duplicate.alpha == 1f) {
-                if (randPos >= savedFaces.size-1) {randPos=0} else {randPos+=1}
-                savedBitmap = drawUtils.swapFaces(bitmap, savedFaces, randPos, true)
+                if (randPos >= newFaces.size-1) {randPos=0} else {randPos+=1}
+                savedBitmap = drawUtils.swapFaces(bitmap, newFaces, randPos, true)
                 Glide.with(this)
                     .load(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
                     .into(image_preview)
                 toggleButton(true, 2)
-            } else {
-                Toast.makeText(this, "Not enough face data", Toast.LENGTH_SHORT).show()
             }
         }
 
         button_swap.setOnClickListener {
             if (button_swap.alpha == 1f) {
-                if (randPos+1 >= savedFaces.size-1) {randPos=0} else {randPos+=1}
-                savedBitmap = drawUtils.swapFaces(bitmap, savedFaces, randPos)
+                if (randPos+1 >= newFaces.size-1) {randPos=0} else {randPos+=1}
+                savedBitmap = drawUtils.swapFaces(bitmap, newFaces, randPos)
                 Glide.with(this)
                     .load(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
                     .into(image_preview)
                 toggleButton(true, 2)
-            } else {
-                Toast.makeText(this, "Not enough face data", Toast.LENGTH_SHORT).show()
             }
         }
 
         button_save.setOnClickListener {
             if (button_save.alpha == 1f) {
                 saveDialog()
-            } else {
-                Toast.makeText(this, "Swap face first!", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -184,13 +197,15 @@ class SwapActivity : AppCompatActivity() {
             .addOnSuccessListener { faces ->
                 if (faces.isNotEmpty()) {
                     text_info.text = "[SCANNING FACE]"
-                    //image_preview.setImageBitmap(drawUtils.drawRectFaces(bitmap, faces, Color.RED))
-                    detectFacesContour(bitmap, faces) { newFaces ->
-                        if (newFaces.isNotEmpty()) {
-                            savedFaces = drawUtils.checkFacePoint(bitmap, newFaces)
+                    //image_preview.setImageBitmap(drawUtils.drawShapeFaces(bitmap, faces))
+                    detectFacesContour(bitmap, faces) { detFaces ->
+                        if (detFaces.isNotEmpty()) {
+                            savedFaces = drawUtils.checkFacePoint(bitmap, detFaces)
+                            newFaces = savedFaces
+                            selectFaces = MutableList(savedFaces.size) {1}
 
                             if (savedFaces.isNotEmpty()) {
-                                text_info.text = "[${savedFaces.size} FACE]"
+                                text_info.text = "[${savedFaces.size} FACE]  [${selectFaces.sum()} SELECTED]"
                                 savedBitmap = drawUtils.drawContourFaces(bitmap, savedFaces)
                                 image_preview.setImageBitmap(bitmapWithWatermark(watermark, savedBitmap, watermarkBitmap))
 
@@ -247,11 +262,61 @@ class SwapActivity : AppCompatActivity() {
         dialog.show()
     }
 
+    // dialog untuk memilih wajah
+    @SuppressLint("SetTextI18n")
+    private fun chooseFaceDialog() {
+        // fungsi jika dialog aktif
+        toggleDialog(true)
+        // susun dan tampilkan dialog kustom
+        val customDialog = BottomSheetDialog(this).apply {
+            window?.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+            setContentView(R.layout.botdialog_face_select)
+            setOnDismissListener {
+                toggleDialog(false)
+            }
+        }
+        customDialog.show()
+        // ambil referensi view dari dialog
+        val textDialog = customDialog.findViewById<TextView>(R.id.text_dialog)
+        val buttonClose = customDialog.findViewById<Button>(R.id.button_close)
+        val recyclerFace = customDialog.findViewById<RecyclerView>(R.id.recycler_face)
+        // setting untuk recyclerview
+        val chooseFaceAdapter = ChooseFaceAdapter(this, bitmap, savedFaces, selectFaces, textDialog, 2)
+        recyclerFace?.adapter = chooseFaceAdapter
+        recyclerFace?.layoutManager = GridLayoutManager(this, 2, GridLayoutManager.HORIZONTAL, false)
+        // ganti text dialog
+        textDialog?.text = "[${savedFaces.size} FACE] [${selectFaces.sum()} SELECTED]"
+        // tombol tutup dialog
+        buttonClose?.setOnClickListener {
+            customDialog.dismiss()
+        }
+    }
+    // fungsi tergantung kondisi dialog
+    @SuppressLint("SetTextI18n")
+    private fun toggleDialog(bool: Boolean) {
+        if (bool) {
+            Glide.with(this)
+                .load(drawUtils.drawContourFaces(bitmap, savedFaces))
+                .into(image_preview)
+        } else {
+            toggleButton(false, 2)
+
+            newFaces = drawUtils.getSelectedFaces(savedFaces, selectFaces)
+            savedBitmap = drawUtils.drawContourFaces(bitmap, newFaces)
+            Glide.with(this)
+                .load(savedBitmap)
+                .into(image_preview)
+
+            text_info.text = "[${savedFaces.size} FACE] [${selectFaces.sum()} SELECTED]"
+        }
+    }
+
     private fun toggleButton(bool: Boolean, buttonGroup: Int=0) {
         val n: Float = if (bool) 1f else 0.6f
 
         if (buttonGroup == 0 || buttonGroup == 1)  {
             button_watermark.alpha = n
+            button_setting.alpha = n
             button_duplicate.alpha = n
             button_swap.alpha = n
         }
