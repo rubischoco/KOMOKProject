@@ -11,9 +11,9 @@
 
 | Story | Task | Status | Contributor |
 |-------|------|--------|-------------|
-| Saya bisa mendapatkan petunjuk penggunaan aplikasi | [Membuat tampilan petunjuk](https://github.com/rubischoco/KOMOKProject/issues/22) | In Progress | Fathur |
+| Saya bisa mendapatkan petunjuk penggunaan aplikasi | [Membuat tampilan petunjuk](https://github.com/rubischoco/KOMOKProject/issues/22) | Completed | Fathur |
 | Saya bisa melakukan swap face dengan gambar yang sudah tersedia dari aplikasi | [Membuat integrasi dari database ke aplikasi](https://github.com/rubischoco/KOMOKProject/issues/26)| Completed | Ari |
-| Saya bisa melakukan mix face | [Membuat sistem mix face](https://github.com/rubischoco/KOMOKProject/issues/28)| In Progress | Riza |
+| Saya bisa melakukan mix face | [Membuat sistem mix face](https://github.com/rubischoco/KOMOKProject/issues/28)| Completed | Riza |
 
 ## Web Service
 -> [Link Web Service](https://github.com/rubischoco/KOMOKProject_2)
