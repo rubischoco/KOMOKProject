@@ -20,4 +20,4 @@ Fungsi dari aplikasi ini yaitu :
 -> [Link Web Service](https://github.com/rubischoco/KOMOKProject_2)
 
 ## Playstore
--> [Link Playstore](https://github.com/rubischoco/KOMOKProject)
+-> [Link Playstore](https://play.google.com/store/apps/details?id=com.teamC.komok)
