@@ -23,4 +23,4 @@ Fungsi dari aplikasi ini yaitu :
 -> [Link Playstore](https://play.google.com/store/apps/details?id=com.teamC.komok)
 
 ## Final Project
--> [Link Final Project](https://drive.google.com/file/d/1ppZDlVLHUGbfMs7UfQceyhl8dwVtim4H/view?usp=sharing)
+-> [Link Final Project](https://drive.google.com/file/d/1PoviNgB0dC7aWBpqT-GWtBZsahezBkab/view?usp=sharing)
